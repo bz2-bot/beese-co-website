@@ -23,7 +23,7 @@
     <div class="page-width tumbler-shop__nav-inner">
       <a class="tumbler-shop__nav-item is-active" href="#tumbler-overview" data-tumbler-nav>Overview</a>
       <a class="tumbler-shop__nav-item" href="#create-custom" data-tumbler-nav>Create custom</a>
-      <a class="tumbler-shop__nav-item" href="#decoration-style" data-tumbler-nav>Laser or full color</a>
+      <a class="tumbler-shop__nav-item" href="#decoration-style" data-tumbler-nav>Personalization options</a>
       <a class="tumbler-shop__nav-item" href="#shop-by-size" data-tumbler-nav>Shop by size</a>
       {% for block in section.blocks %}
         {% assign size_anchor = block.settings.anchor | handleize %}
@@ -41,9 +41,13 @@
         <ol class="tumbler-shop__custom-steps" aria-label="Custom tumbler steps">
           <li><strong>Pick a size</strong><span>Choose the tumbler that fits your day.</span></li>
           <li><strong>Pick a color</strong><span>Select from the available finish options.</span></li>
-          <li><strong>Choose decoration</strong><span>Laser engraved or vibrant full color.</span></li>
-          <li><strong>Approve your proof</strong><span>We send a digital proof before production.</span></li>
+          <li><strong>Upload and personalize</strong><span>Add your logo, artwork, name or text, then choose laser engraving or full color.</span></li>
+          <li><strong>Approve your taped proof</strong><span>We text you a photo of your complimentary taped proof before production begins.</span></li>
         </ol>
+        <div class="tumbler-shop__proof-note" role="note">
+          <strong>Nothing is made without your approval.</strong>
+          <span>Your on-page preview helps you visualize the design. We will text you a photo of a taped proof showing the final size and placement before production begins.</span>
+        </div>
         {% if section.settings.custom_product != blank %}
           <a class="button" href="{{ section.settings.custom_product.url }}">{{ section.settings.custom_button }} →</a>
         {% else %}
@@ -60,9 +64,10 @@
     </section>
 
     <section id="decoration-style" class="tumbler-shop__section tumbler-shop__decoration" data-tumbler-section aria-labelledby="DecorationHeading-{{ section.id }}">
-      <div class="section-heading"><span></span><h2 id="DecorationHeading-{{ section.id }}">How would you like it personalized?</h2><span></span></div>
+      <div class="section-heading"><span></span><h2 id="DecorationHeading-{{ section.id }}">Choose your personalization on the product page</h2><span></span></div>
+      <p class="tumbler-shop__section-intro">Shop by tumbler size first. After choosing your cup and color, upload your artwork and select the finish that fits your design.</p>
       <div class="tumbler-shop__decoration-grid">
-        <a class="tumbler-shop__decoration-card" href="{{ section.settings.laser_link | default: '#shop-by-size' }}">
+        <div class="tumbler-shop__decoration-card">
           <div class="tumbler-shop__decoration-media">
             {% if section.settings.laser_image != blank %}
               {{ section.settings.laser_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '420,700,1000', sizes: '(min-width: 750px) 50vw, 100vw', alt: section.settings.laser_image.alt | default: 'Laser engraved tumblers' }}
@@ -73,11 +78,11 @@
           <div class="tumbler-shop__decoration-copy">
             <div class="eyebrow">Permanent and timeless</div>
             <h3 class="heading heading-md">Laser Engraved</h3>
-            <p>Clean, durable personalization etched into the finish. Ideal for names, logos and simple artwork.</p>
-            <span>Shop laser engraved →</span>
+            <p>Clean, durable personalization etched into the finish. Uploaded artwork will appear in an engraved gray preview so you can visualize the finished look.</p>
+            <span>Available while customizing your tumbler</span>
           </div>
-        </a>
-        <a class="tumbler-shop__decoration-card" href="{{ section.settings.full_color_link | default: '#shop-by-size' }}">
+        </div>
+        <div class="tumbler-shop__decoration-card">
           <div class="tumbler-shop__decoration-media">
             {% if section.settings.full_color_image != blank %}
               {{ section.settings.full_color_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '420,700,1000', sizes: '(min-width: 750px) 50vw, 100vw', alt: section.settings.full_color_image.alt | default: 'Full color printed tumblers' }}
@@ -88,10 +93,10 @@
           <div class="tumbler-shop__decoration-copy">
             <div class="eyebrow">Bright and detailed</div>
             <h3 class="heading heading-md">Full Color</h3>
-            <p>Vibrant UV printing for detailed artwork, photographs and designs that need color.</p>
-            <span>Shop full color →</span>
+            <p>Vibrant UV printing for detailed artwork, photographs and designs that need color. Uploaded artwork will remain in its original colors in the instant preview.</p>
+            <span>Available while customizing your tumbler</span>
           </div>
-        </a>
+        </div>
       </div>
     </section>
 
@@ -177,23 +182,21 @@
     {"type":"text","id":"eyebrow","label":"Hero eyebrow","default":"Personalized Tumblers"},
     {"type":"text","id":"heading","label":"Hero heading","default":"Made to last."},
     {"type":"text","id":"accent_heading","label":"Gold hero line","default":"Personalized for you."},
-    {"type":"textarea","id":"intro","label":"Hero text","default":"Shop custom tumblers by size or decoration style, then personalize your favorite with a name, logo or design."},
+    {"type":"textarea","id":"intro","label":"Hero text","default":"Shop custom tumblers by size, then personalize your favorite with a name, logo or design in laser engraving or full color."},
     {"type":"text","id":"primary_button","label":"Hero button","default":"Create a custom tumbler"},
     {"type":"image_picker","id":"hero_image","label":"Hero image"},
 
     {"type":"header","content":"Custom tumbler"},
     {"type":"text","id":"custom_eyebrow","label":"Eyebrow","default":"Start with your idea"},
     {"type":"text","id":"custom_heading","label":"Heading","default":"Create a Custom Tumbler"},
-    {"type":"textarea","id":"custom_text","label":"Text","default":"Pick the size, color and decoration style that fit what you have in mind. You will receive a digital proof before we make it."},
+    {"type":"textarea","id":"custom_text","label":"Text","default":"Pick your size and color, upload your artwork, and choose laser engraving or full color while customizing. Before production, we will text you a photo of your complimentary taped proof for approval."},
     {"type":"text","id":"custom_button","label":"Button","default":"Start customizing"},
     {"type":"product","id":"custom_product","label":"All-size custom tumbler product"},
     {"type":"image_picker","id":"custom_image","label":"Custom section image"},
 
-    {"type":"header","content":"Decoration paths"},
+    {"type":"header","content":"Personalization options"},
     {"type":"image_picker","id":"laser_image","label":"Laser engraved image"},
-    {"type":"url","id":"laser_link","label":"Laser engraved link"},
     {"type":"image_picker","id":"full_color_image","label":"Full color image"},
-    {"type":"url","id":"full_color_link","label":"Full color link"},
 
     {"type":"header","content":"Shop by size"},
     {"type":"text","id":"size_heading","label":"Heading","default":"Shop tumblers by size"},
