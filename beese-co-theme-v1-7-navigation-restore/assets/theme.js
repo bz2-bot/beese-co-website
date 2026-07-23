@@ -8,12 +8,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const toggle = document.querySelector('[data-mobile-toggle]');
   const menu = document.querySelector('[data-mobile-menu]');
+  const closeMenu = () => {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    menu.removeAttribute('open');
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('mobile-menu-open');
+  };
+  const openMenu = () => {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
+    menu.setAttribute('open', '');
+    menu.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('mobile-menu-open');
+    menu.querySelector('a')?.focus();
+  };
+
   if (toggle && menu) {
     toggle.addEventListener('click', () => {
-      const open = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!open));
-      if (open) menu.removeAttribute('open'); else menu.setAttribute('open', '');
+      if (toggle.getAttribute('aria-expanded') === 'true') closeMenu(); else openMenu();
     });
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 990) closeMenu();
+    }, { passive: true });
   }
 
   document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {
@@ -69,27 +95,23 @@ document.addEventListener('DOMContentLoaded', () => {
       if (match) match.click();
     });
   });
-});
 
-// Keep the tumbler page on one continuous shopping path and show where the shopper is.
-document.addEventListener('DOMContentLoaded', () => {
   const shop = document.querySelector('[data-tumbler-shop]');
-  if (!shop) return;
-  const links = [...shop.querySelectorAll('[data-tumbler-nav]')];
-  const sections = [...shop.querySelectorAll('[data-tumbler-section]')];
-  const setActive = (id) => {
-    links.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`));
-  };
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible?.target?.id) setActive(visible.target.id);
-    }, { rootMargin: '-25% 0px -60% 0px', threshold: [0.05, 0.2, 0.5] });
-    sections.forEach((section) => observer.observe(section));
+  if (shop) {
+    const links = [...shop.querySelectorAll('[data-tumbler-nav]')];
+    const sections = [...shop.querySelectorAll('[data-tumbler-section]')];
+    const setActive = (id) => {
+      links.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`));
+    };
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target?.id) setActive(visible.target.id);
+      }, { rootMargin: '-25% 0px -60% 0px', threshold: [0.05, 0.2, 0.5] });
+      sections.forEach((section) => observer.observe(section));
+    }
   }
-});
 
-document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.tumbler-shop__nav-sizes a').forEach((link) => {
     link.addEventListener('click', () => link.closest('details')?.removeAttribute('open'));
   });
