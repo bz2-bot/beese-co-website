@@ -1,19 +1,62 @@
-<section class="page-width product-page" data-product-root>
+<section
+  class="page-width product-page"
+  data-product-root
+  data-preview-profile="{{ section.settings.preview_profile }}"
+  style="
+    --preview-left: {{ section.settings.preview_left }}%;
+    --preview-top: {{ section.settings.preview_top }}%;
+    --preview-width: {{ section.settings.preview_width }}%;
+    --preview-height: {{ section.settings.preview_height }}%;
+  "
+>
   <div class="product-gallery" data-product-gallery>
     <div class="product-gallery__stage" data-preview-stage>
       {% if product.featured_image %}
-        {{ product.featured_image | image_url: width: 1800 | image_tag: loading: 'eager', data-main-image: '', class: 'product-gallery__main', alt: product.featured_image.alt | default: product.title }}
+        {% assign featured_alt = product.featured_image.alt | default: product.title %}
+        {{
+          product.featured_image
+          | image_url: width: 1800
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '600, 900, 1200, 1500, 1800',
+            sizes: '(min-width: 901px) 55vw, 100vw',
+            data-main-image: '',
+            class: 'product-gallery__main',
+            alt: featured_alt
+        }}
       {% else %}
-        <img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image product-gallery__main" alt="Product image placeholder" loading="eager">
+        <img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image product-gallery__main" alt="Product image placeholder" width="1800" height="1800" loading="eager">
       {% endif %}
-      <img class="product-preview__artwork" data-artwork-preview alt="Uploaded artwork preview">
+      <div class="product-preview__boundary" data-preview-boundary aria-hidden="true">
+        <img class="product-preview__artwork" data-artwork-preview alt="" width="576" height="1170">
+      </div>
       <div class="product-preview__badge">Instant preview — taped proof required</div>
     </div>
     {% if product.images.size > 1 %}
       <div class="product-thumbs" aria-label="Product images">
         {% for image in product.images %}
-          <button class="product-thumb" type="button" data-thumb data-src="{{ image | image_url: width: 1800 }}" data-alt="{{ image.alt | default: product.title | escape }}" data-tags="{{ image.alt | escape }}" {% if forloop.first %}aria-current="true"{% endif %}>
-            {{ image | image_url: width: 260 | image_tag: loading: 'lazy', alt: image.alt | default: product.title }}
+          {% assign image_alt = image.alt | default: product.title %}
+          <button
+            class="product-thumb"
+            type="button"
+            data-thumb
+            data-image-id="{{ image.id }}"
+            data-src="{{ image | image_url: width: 1800 }}"
+            data-alt="{{ image.alt | default: product.title | escape }}"
+            data-tags="{{ image.alt | escape }}"
+            aria-label="Show {{ image_alt | escape }}"
+            {% if forloop.first %}aria-current="true"{% endif %}
+          >
+            {{
+              image
+              | image_url: width: 260
+              | image_tag:
+                loading: 'lazy',
+                widths: '130, 195, 260',
+                sizes: '84px',
+                alt: image_alt
+            }}
           </button>
         {% endfor %}
       </div>
@@ -29,7 +72,7 @@
     {% form 'product', product, enctype: 'multipart/form-data', data-product-form: '' %}
       {% unless product.has_only_default_variant %}
         {% for option in product.options_with_values %}
-          <fieldset class="field" data-option-position="{{ option.position }}">
+          <fieldset class="field" data-option-position="{{ option.position }}" data-option-name="{{ option.name | handleize }}">
             <legend>{{ option.name }}</legend>
             <div class="choice-row">
               {% for value in option.values %}
@@ -69,11 +112,11 @@
         <div class="preview-controls" data-preview-controls>
           <div class="preview-control">
             <label for="ArtworkSize"><span>Preview size</span><span data-size-value>30%</span></label>
-            <input id="ArtworkSize" type="range" min="14" max="52" value="30" data-preview-size>
+            <input id="ArtworkSize" type="range" min="20" max="92" value="64" data-preview-size>
           </div>
           <div class="preview-control">
-            <label for="ArtworkPosition"><span>Vertical position</span><span data-position-value>48%</span></label>
-            <input id="ArtworkPosition" type="range" min="25" max="70" value="48" data-preview-position>
+            <label for="ArtworkPosition"><span>Vertical position</span><span data-position-value>50%</span></label>
+            <input id="ArtworkPosition" type="range" min="15" max="85" value="50" data-preview-position>
           </div>
         </div>
       </div>
@@ -90,7 +133,7 @@
 
       <div class="field">
         <label for="Phone">Mobile number for your taped proof</label>
-        <input id="Phone" type="tel" name="properties[Mobile Number for Taped Proof]" autocomplete="tel" inputmode="tel" required placeholder="Please make sure this number is correct">
+        <input id="Phone" type="tel" name="properties[Mobile Number for Taped Proof]" autocomplete="tel" inputmode="tel" minlength="10" required placeholder="Please make sure this number is correct">
         <small class="field-help">We use this number only to text your taped proof and communicate about this order.</small>
       </div>
 
@@ -105,8 +148,9 @@
       </div>
 
       <input type="hidden" name="properties[Instant Preview Decoration]" value="Laser Engraved" data-preview-decoration>
-      <input type="hidden" name="properties[Instant Preview Size]" value="30%" data-preview-size-property>
-      <input type="hidden" name="properties[Instant Preview Position]" value="48%" data-preview-position-property>
+      <input type="hidden" name="properties[Instant Preview Profile]" value="{{ section.settings.preview_profile }}" data-preview-profile-property>
+      <input type="hidden" name="properties[Instant Preview Size]" value="64%" data-preview-size-property>
+      <input type="hidden" name="properties[Instant Preview Position]" value="50%" data-preview-position-property>
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
 
       <div class="product-form-error" data-product-error role="alert"></div>
@@ -124,9 +168,19 @@
       <div>Personalized in Illinois</div>
       <div>Pickup or shipping available</div>
     </div>
+
+    <nav class="product-related-links" aria-label="Related shopping links">
+      {% if collection %}
+        <a href="{{ collection.url }}">Shop more {{ collection.title }}</a>
+      {% else %}
+        <a href="{{ routes.all_products_collection_url }}">Shop all tumblers</a>
+      {% endif %}
+      <a href="{{ routes.root_url }}pages/contact">Questions? Contact Dana</a>
+    </nav>
   </div>
 
   <script type="application/json" data-product-json>{{ product | json }}</script>
+  {{ product | structured_data }}
 </section>
 
 {% schema %}
@@ -134,7 +188,13 @@
   "name":"Main product",
   "settings":[
     {"type":"checkbox","id":"show_decoration","label":"Show decoration method","default":true},
-    {"type":"checkbox","id":"laser_only","label":"Laser only (use for handled tumblers)","default":false}
+    {"type":"checkbox","id":"laser_only","label":"Laser only (use for handled tumblers)","default":false},
+    {"type":"header","content":"Instant preview boundary"},
+    {"type":"text","id":"preview_profile","label":"Preview profile name","default":"22 oz master"},
+    {"type":"range","id":"preview_left","label":"Boundary left position","min":0,"max":70,"step":1,"unit":"%","default":34},
+    {"type":"range","id":"preview_top","label":"Boundary top position","min":0,"max":70,"step":1,"unit":"%","default":16},
+    {"type":"range","id":"preview_width","label":"Boundary width","min":10,"max":70,"step":1,"unit":"%","default":32},
+    {"type":"range","id":"preview_height","label":"Boundary height","min":10,"max":80,"step":1,"unit":"%","default":65}
   ]
 }
 {% endschema %}

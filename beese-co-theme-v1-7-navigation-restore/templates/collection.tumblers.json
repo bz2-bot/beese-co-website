@@ -3,28 +3,28 @@
     "main": {
       "type": "tumbler-landing",
       "settings": {
-        "eyebrow": "Personalized Tumblers",
+        "eyebrow": "Tumblers",
         "heading": "Made to last.",
         "accent_heading": "Personalized for you.",
-        "intro": "Shop custom tumblers by size or decoration style, then personalize your favorite with a name, logo or design.",
+        "intro": "Choose your size, color and decoration style without bouncing through a maze of pages.",
         "primary_button": "Create a custom tumbler",
         "custom_eyebrow": "Start with your idea",
         "custom_heading": "Create a Custom Tumbler",
-        "custom_text": "Pick the size, color and decoration style that fit what you have in mind. You will receive a digital proof before we make it.",
+        "custom_text": "Pick the size, color and finish that fit what you have in mind. You will receive a digital proof before we make it.",
         "custom_button": "Start customizing",
-        "size_heading": "Shop tumblers by size",
+        "size_heading": "Shop by size",
         "size_intro": "Know the size you want? Jump straight to it. Every size stays on this page until you choose a product.",
         "help_heading": "Still not sure where to start?",
         "help_text": "Tell Dana what you have in mind and we will point you in the right direction.",
         "help_button": "Contact Dana"
       },
       "blocks": {
-        "size20": {"type":"size_section","settings":{"anchor":"20-oz","nav_label":"20 oz","eyebrow":"Everyday favorite","title":"20 oz Skinny","short_text":"A classic everyday size.","description":"Shop personalized 20 oz skinny tumblers or start with a blank tumbler and create your own design.","products_to_show":4}},
-        "size22": {"type":"size_section","settings":{"anchor":"22-oz","nav_label":"22 oz","eyebrow":"Slim and versatile","title":"22 oz Skinny","short_text":"Slim, useful and easy to carry.","description":"Browse personalized 22 oz tumblers with laser engraving or vibrant full-color printing.","products_to_show":4}},
-        "size30": {"type":"size_section","settings":{"anchor":"30-oz","nav_label":"30 oz","eyebrow":"More room","title":"30 oz Tumbler","short_text":"More capacity without feeling oversized.","description":"Shop custom 30 oz tumblers for work, travel and everyday use.","products_to_show":4}},
-        "size40": {"type":"size_section","settings":{"anchor":"40-oz","nav_label":"40 oz","eyebrow":"All-day size","title":"40 oz Tumbler","short_text":"Built for long days and fewer refills.","description":"Browse large personalized 40 oz tumblers made for long days and fewer refills.","products_to_show":4}},
-        "sizehandle": {"type":"size_section","settings":{"anchor":"40-oz-handled","nav_label":"Handled","eyebrow":"Easy to carry","title":"40 oz Tumbler with Handle","short_text":"Big capacity with a comfortable handle.","description":"Handled tumblers are available with permanent laser engraving for names, logos and simple artwork.","products_to_show":4}},
-        "sizebottle": {"type":"size_section","settings":{"anchor":"water-bottles","nav_label":"Bottles","eyebrow":"On the go","title":"Water Bottles","short_text":"Made for school, sports and everyday use.","description":"Shop personalized water bottles for school, sports, work and everyday adventures.","products_to_show":4}}
+        "size20": {"type":"size_section","settings":{"anchor":"20-oz","nav_label":"20 oz","eyebrow":"Find your fit","title":"20 oz Skinny","short_text":"A classic everyday size.","description":"Browse ready-to-personalize designs or start with a blank tumbler in this size.","products_to_show":4}},
+        "size22": {"type":"size_section","settings":{"anchor":"22-oz","nav_label":"22 oz","eyebrow":"Find your fit","title":"22 oz Skinny","short_text":"Slim, useful and easy to carry.","description":"Browse ready-to-personalize designs or start with a blank tumbler in this size.","products_to_show":4}},
+        "size30": {"type":"size_section","settings":{"anchor":"30-oz","nav_label":"30 oz","eyebrow":"More room","title":"30 oz Tumbler","short_text":"More capacity without feeling oversized.","description":"Browse ready-to-personalize designs or start with a blank tumbler in this size.","products_to_show":4}},
+        "size40": {"type":"size_section","settings":{"anchor":"40-oz","nav_label":"40 oz","eyebrow":"All-day size","title":"40 oz Tumbler","short_text":"Built for long days and fewer refills.","description":"Browse ready-to-personalize designs or start with a blank tumbler in this size.","products_to_show":4}},
+        "sizehandle": {"type":"size_section","settings":{"anchor":"40-oz-handled","nav_label":"Handled","eyebrow":"Easy to carry","title":"40 oz Tumbler with Handle","short_text":"Big capacity with a comfortable handle.","description":"Handled tumblers are available with laser engraving. Browse the collection or customize your own.","products_to_show":4}},
+        "sizebottle": {"type":"size_section","settings":{"anchor":"water-bottles","nav_label":"Bottles","eyebrow":"On the go","title":"Water Bottles","short_text":"Made for school, sports and everyday use.","description":"Browse personalized water bottles or start with your own name, logo or design.","products_to_show":4}}
       },
       "block_order": ["size20","size22","size30","size40","sizehandle","sizebottle"]
     }

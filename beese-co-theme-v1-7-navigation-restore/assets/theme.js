@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gallery.querySelectorAll('[data-thumb]').forEach((button) => button.addEventListener('click', () => {
       main.style.opacity = '0';
       window.setTimeout(() => {
+        main.removeAttribute('srcset');
         main.src = button.dataset.src;
         main.alt = button.dataset.alt || '';
         main.style.opacity = '1';
@@ -100,11 +101,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const decorationProperty = form.querySelector('[data-preview-decoration]');
     const decorationHelp = form.querySelector('[data-decoration-help]');
     const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', { style: 'currency', currency: window.Shopify?.currency?.active || 'USD' }).format(cents / 100);
+    const normalize = (value = '') => value
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
 
     const setError = (message = '') => {
       if (!error) return;
       error.textContent = message;
       error.classList.toggle('is-visible', Boolean(message));
+    };
+
+    const selectVariantImage = (variant) => {
+      const gallery = root.querySelector('[data-product-gallery]');
+      if (!gallery) return;
+
+      const thumbs = [...gallery.querySelectorAll('[data-thumb]')];
+      const featuredImage = variant.featured_image || variant.featured_media?.preview_image;
+      const imageId = String(featuredImage?.id || variant.featured_media?.id || '');
+      const colorField = [...form.querySelectorAll('[data-option-position]')]
+        .find((field) => field.dataset.optionName?.includes('color'));
+      const color = normalize(colorField?.querySelector('input:checked')?.value);
+
+      const match = thumbs.find((thumb) => imageId && thumb.dataset.imageId === imageId)
+        || thumbs.find((thumb) => {
+          const alt = normalize(thumb.dataset.alt);
+          return color && (alt === color || alt.endsWith(` in ${color}`));
+        });
+
+      if (match) {
+        match.click();
+        return;
+      }
+
+      const main = gallery.querySelector('[data-main-image]');
+      const imageSrc = featuredImage?.src || featuredImage?.url;
+      if (main && imageSrc) {
+        main.removeAttribute('srcset');
+        main.src = imageSrc;
+        main.alt = featuredImage.alt || product.title;
+      }
     };
 
     const updateVariant = () => {
@@ -123,8 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const url = new URL(window.location.href);
       url.searchParams.set('variant', variant.id);
       window.history.replaceState({}, '', url);
+      selectVariantImage(variant);
     };
     form.querySelectorAll('[data-option-position] input').forEach((input) => input.addEventListener('change', updateVariant));
+    updateVariant();
 
     const applyDecorationPreview = () => {
       const selected = form.querySelector('[data-decoration-choice] input:checked');
@@ -192,6 +230,13 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         setError('Enter the mobile number where you want to receive your taped proof.');
         phone?.focus();
+        return;
+      }
+      const phoneDigits = phone.value.replace(/\D/g, '');
+      if (phoneDigits.length < 10 || phoneDigits.length > 15) {
+        event.preventDefault();
+        setError('Enter a valid mobile number, including the area code, for your taped proof.');
+        phone.focus();
         return;
       }
       if (!proof?.checked) {
