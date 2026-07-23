@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const toggle = document.querySelector('[data-mobile-toggle]');
   const menu = document.querySelector('[data-mobile-menu]');
+  let previouslyFocused = null;
+  const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
   const closeMenu = () => {
     if (!toggle || !menu) return;
     toggle.setAttribute('aria-expanded', 'false');
@@ -15,30 +18,47 @@ document.addEventListener('DOMContentLoaded', () => {
     menu.removeAttribute('open');
     menu.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('mobile-menu-open');
+    previouslyFocused?.focus();
   };
+
   const openMenu = () => {
     if (!toggle || !menu) return;
+    previouslyFocused = document.activeElement;
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', 'Close menu');
     menu.setAttribute('open', '');
     menu.setAttribute('aria-hidden', 'false');
     document.body.classList.add('mobile-menu-open');
-    menu.querySelector('a')?.focus();
+    menu.querySelector(focusableSelector)?.focus();
   };
 
   if (toggle && menu) {
     toggle.addEventListener('click', () => {
       if (toggle.getAttribute('aria-expanded') === 'true') closeMenu(); else openMenu();
     });
-    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+    menu.querySelectorAll('[data-mobile-close], a').forEach((element) => element.addEventListener('click', closeMenu));
+    menu.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
         closeMenu();
-        toggle.focus();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const focusable = [...menu.querySelectorAll(focusableSelector)].filter((element) => element.offsetParent !== null);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     });
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 990) closeMenu();
+      syncHeaderHeight();
+      if (window.innerWidth > 990 && toggle.getAttribute('aria-expanded') === 'true') closeMenu();
     }, { passive: true });
   }
 
@@ -101,13 +121,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const links = [...shop.querySelectorAll('[data-tumbler-nav]')];
     const sections = [...shop.querySelectorAll('[data-tumbler-section]')];
     const setActive = (id) => {
-      links.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`));
+      links.forEach((link) => {
+        const active = link.getAttribute('href') === `#${id}`;
+        link.classList.toggle('is-active', active);
+        if (active) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
+      });
     };
+    links.forEach((link) => link.addEventListener('click', () => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) setActive(target.id);
+    }));
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible?.target?.id) setActive(visible.target.id);
-      }, { rootMargin: '-25% 0px -60% 0px', threshold: [0.05, 0.2, 0.5] });
+      }, { rootMargin: `calc(var(--beese-header-height, 120px) * -1) 0px -55% 0px`, threshold: [0.05, 0.2, 0.5] });
       sections.forEach((section) => observer.observe(section));
     }
   }
