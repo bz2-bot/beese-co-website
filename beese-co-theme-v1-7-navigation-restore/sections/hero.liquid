@@ -1,1 +1,40 @@
-<section class="hero"><div class="hero__grid"><div class="hero__content"><div class="eyebrow">{{ section.settings.eyebrow }}</div><h1 class="heading heading-xl">{{ section.settings.heading }}</h1><div class="script">{{ section.settings.script }}</div><p>{{ section.settings.text }}</p><div class="hero__actions"><a class="button" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label }}</a><a class="button button--secondary" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label }}</a></div></div><div class="hero__media">{% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 1800 | image_tag: loading: 'eager', widths: '700,1000,1400,1800' }}{% else %}<img src="{{ 'placeholder-hero.svg' | asset_url }}" class="theme-placeholder-image" alt="Placeholder for the approved Beese and Co. hero photograph" loading="eager">{% endif %}</div></div></section>{% schema %}{"name":"Hero","settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"Custom made in Illinois"},{"type":"textarea","id":"heading","label":"Heading","default":"Custom Laser Engraving & UV Printing"},{"type":"text","id":"script","label":"Script line","default":"Made one piece at a time."},{"type":"textarea","id":"text","label":"Text","default":"Personalized drinkware, ornaments, gifts and custom orders."},{"type":"text","id":"primary_label","label":"Primary button","default":"Shop Tumblers"},{"type":"url","id":"primary_link","label":"Primary link"},{"type":"text","id":"secondary_label","label":"Secondary button","default":"Bulk Orders"},{"type":"url","id":"secondary_link","label":"Secondary link"},{"type":"image_picker","id":"image","label":"Hero image"}],"presets":[{"name":"Hero"}]}{% endschema %}
+<section class="hero" aria-labelledby="HomepageHeroTitle">
+  <div class="hero__grid">
+    <div class="hero__content">
+      {% if section.settings.eyebrow != blank %}<div class="eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+      <h1 class="heading heading-xl" id="HomepageHeroTitle">{{ section.settings.heading }}</h1>
+      {% if section.settings.script != blank %}<div class="script">{{ section.settings.script }}</div>{% endif %}
+      {% if section.settings.text != blank %}<p>{{ section.settings.text }}</p>{% endif %}
+      <div class="hero__actions">
+        {% if section.settings.primary_label != blank and section.settings.primary_link != blank %}<a class="button" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label }}</a>{% endif %}
+        {% if section.settings.secondary_label != blank and section.settings.secondary_link != blank %}<a class="button button--secondary" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label }}</a>{% endif %}
+      </div>
+    </div>
+    <div class="hero__media">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1500,1800', sizes: '(max-width: 990px) 100vw, 55vw', alt: section.settings.image_alt | default: section.settings.heading }}
+      {% else %}
+        <img src="{{ 'placeholder-hero.svg' | asset_url }}" class="theme-placeholder-image" alt="Beese and Co. personalized products" loading="eager" fetchpriority="high">
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name":"Hero",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Made in Northern Illinois"},
+    {"type":"textarea","id":"heading","label":"Heading","default":"Personalized gifts made for real life."},
+    {"type":"text","id":"script","label":"Script line","default":"Made one piece at a time."},
+    {"type":"textarea","id":"text","label":"Text","default":"Shop custom tumblers, ornaments, golf gifts and one-of-a-kind pieces with laser engraving or vibrant full-color printing."},
+    {"type":"text","id":"primary_label","label":"Primary button","default":"Shop Laser Engraved"},
+    {"type":"url","id":"primary_link","label":"Primary link"},
+    {"type":"text","id":"secondary_label","label":"Secondary button","default":"Shop Full Color"},
+    {"type":"url","id":"secondary_link","label":"Secondary link"},
+    {"type":"image_picker","id":"image","label":"Hero image"},
+    {"type":"text","id":"image_alt","label":"Hero image description","default":"Personalized Beese and Co. products"}
+  ],
+  "presets":[{"name":"Hero"}]
+}
+{% endschema %}
