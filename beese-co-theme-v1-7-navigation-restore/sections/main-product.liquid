@@ -1,39 +1,140 @@
 <section class="page-width product-page" data-product-root>
   <div class="product-gallery" data-product-gallery>
-    <div class="product-gallery__main">
+    <div class="product-gallery__stage" data-preview-stage>
       {% if product.featured_image %}
-        {{ product.featured_image | image_url: width: 1800 | image_tag: loading: 'eager', data-main-image: '', alt: product.featured_image.alt | default: product.title }}
-      {% else %}<img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="Product image placeholder" loading="eager">{% endif %}
+        {{ product.featured_image | image_url: width: 1800 | image_tag: loading: 'eager', data-main-image: '', class: 'product-gallery__main', alt: product.featured_image.alt | default: product.title }}
+      {% else %}
+        <img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image product-gallery__main" alt="Product image placeholder" loading="eager">
+      {% endif %}
+      <img class="product-preview__artwork" data-artwork-preview alt="Uploaded artwork preview">
+      <div class="product-preview__badge">Instant preview — taped proof required</div>
     </div>
-    {% if product.images.size > 1 %}<div class="product-thumbs" aria-label="Product images">
-      {% for image in product.images %}<button class="product-thumb" type="button" data-thumb data-src="{{ image | image_url: width: 1800 }}" data-alt="{{ image.alt | default: product.title | escape }}" data-tags="{{ image.alt | escape }}" {% if forloop.first %}aria-current="true"{% endif %}>{{ image | image_url: width: 260 | image_tag: loading: 'lazy', alt: image.alt | default: product.title }}</button>{% endfor %}
-    </div>{% endif %}
+    {% if product.images.size > 1 %}
+      <div class="product-thumbs" aria-label="Product images">
+        {% for image in product.images %}
+          <button class="product-thumb" type="button" data-thumb data-src="{{ image | image_url: width: 1800 }}" data-alt="{{ image.alt | default: product.title | escape }}" data-tags="{{ image.alt | escape }}" {% if forloop.first %}aria-current="true"{% endif %}>
+            {{ image | image_url: width: 260 | image_tag: loading: 'lazy', alt: image.alt | default: product.title }}
+          </button>
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
+
   <div class="product-form-wrap">
     <div class="eyebrow">Made to order</div>
     <h1 class="heading heading-md">{{ product.title }}</h1>
     <div class="price" data-product-price>{{ product.selected_or_first_available_variant.price | money }}</div>
-    <div>{{ product.description }}</div>
+    <div class="product-description">{{ product.description }}</div>
+
     {% form 'product', product, enctype: 'multipart/form-data', data-product-form: '' %}
       {% unless product.has_only_default_variant %}
-        {% for option in product.options_with_values %}<fieldset class="field" data-option-position="{{ option.position }}"><legend>{{ option.name }}</legend><div class="choice-row">
-          {% for value in option.values %}<div class="choice"><input type="radio" id="opt-{{ option.position }}-{{ forloop.index }}" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}><label for="opt-{{ option.position }}-{{ forloop.index }}">{{ value }}</label></div>{% endfor %}
-        </div></fieldset>{% endfor %}
+        {% for option in product.options_with_values %}
+          <fieldset class="field" data-option-position="{{ option.position }}">
+            <legend>{{ option.name }}</legend>
+            <div class="choice-row">
+              {% for value in option.values %}
+                <div class="choice">
+                  <input type="radio" id="opt-{{ option.position }}-{{ forloop.index }}" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
+                  <label for="opt-{{ option.position }}-{{ forloop.index }}">{{ value }}</label>
+                </div>
+              {% endfor %}
+            </div>
+          </fieldset>
+        {% endfor %}
       {% endunless %}
-      {% if section.settings.show_decoration %}<fieldset class="field" data-decoration-choice><legend>Decoration Method</legend><div class="choice-row">
-        <div class="choice"><input type="radio" id="dec-laser" name="properties[Decoration Method]" value="Laser Engraved" required checked><label for="dec-laser">Laser Engraved</label></div>
-        {% unless section.settings.laser_only %}<div class="choice"><input type="radio" id="dec-full" name="properties[Decoration Method]" value="Full Color UV"><label for="dec-full">Full Color UV</label></div>{% endunless %}
-      </div></fieldset>{% endif %}
-      <div class="field"><label for="Personalization">Personalization</label><input id="Personalization" type="text" name="properties[Personalization]" placeholder="Add a name, monogram or text"></div>
-      <div class="field"><label for="Phone">Phone Number for Proof</label><input id="Phone" type="tel" name="properties[Phone Number for Proof]" required placeholder="Please make sure this is correct"></div>
-      <div class="field"><label for="Artwork">Upload Artwork</label><input id="Artwork" type="file" name="properties[Artwork Upload]"></div>
-      <div class="field"><label for="Instructions">Special Instructions</label><textarea id="Instructions" name="properties[Special Instructions]" placeholder="Tell us anything we should know."></textarea></div>
-      <div class="field proof-check"><input id="Proof" type="checkbox" name="properties[Digital Proof Agreement]" value="Agreed" required><label for="Proof">I understand I will receive a digital proof by text (please make sure my phone number is correct) before production begins. Production will not begin until I approve my proof.</label></div>
+
+      {% if section.settings.show_decoration %}
+        <fieldset class="field" data-decoration-choice>
+          <legend>How would you like it personalized?</legend>
+          <div class="choice-row">
+            <div class="choice">
+              <input type="radio" id="dec-laser" name="properties[Decoration Method]" value="Laser Engraved" required checked>
+              <label for="dec-laser">Laser Engraved</label>
+            </div>
+            {% unless section.settings.laser_only %}
+              <div class="choice">
+                <input type="radio" id="dec-full" name="properties[Decoration Method]" value="Full Color UV">
+                <label for="dec-full">Full Color</label>
+              </div>
+            {% endunless %}
+          </div>
+          <small class="field-help" data-decoration-help>Laser engraving previews your uploaded artwork in engraved gray.</small>
+        </fieldset>
+      {% endif %}
+
+      <div class="field">
+        <label for="Artwork">Upload your logo or artwork</label>
+        <input id="Artwork" type="file" name="properties[Artwork Upload]" accept=".png,.jpg,.jpeg,.pdf,.svg" data-artwork-upload>
+        <small class="field-help">Transparent PNG files create the best instant preview. Your original file is attached to the order.</small>
+        <div class="preview-controls" data-preview-controls>
+          <div class="preview-control">
+            <label for="ArtworkSize"><span>Preview size</span><span data-size-value>30%</span></label>
+            <input id="ArtworkSize" type="range" min="14" max="52" value="30" data-preview-size>
+          </div>
+          <div class="preview-control">
+            <label for="ArtworkPosition"><span>Vertical position</span><span data-position-value>48%</span></label>
+            <input id="ArtworkPosition" type="range" min="25" max="70" value="48" data-preview-position>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="Personalization">Name, monogram or additional text</label>
+        <input id="Personalization" type="text" name="properties[Personalization]" placeholder="Leave blank if you only want your uploaded artwork">
+      </div>
+
+      <div class="field">
+        <label for="Instructions">Special instructions</label>
+        <textarea id="Instructions" name="properties[Special Instructions]" placeholder="Tell us anything we should know about placement, colors or your design."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="Phone">Mobile number for your taped proof</label>
+        <input id="Phone" type="tel" name="properties[Mobile Number for Taped Proof]" autocomplete="tel" inputmode="tel" required placeholder="Please make sure this number is correct">
+        <small class="field-help">We use this number only to text your taped proof and communicate about this order.</small>
+      </div>
+
+      <div class="proof-panel">
+        <strong>Complimentary taped proof by text</strong>
+        <span>Your instant preview is for visualization only. Before production begins, we will text you a photo of a taped proof showing the final size and placement on the actual product.</span>
+      </div>
+
+      <div class="field proof-check">
+        <input id="Proof" type="checkbox" name="properties[Taped Proof Agreement]" value="Agreed" required>
+        <label for="Proof">I understand I will receive a text with a photo of my taped proof for approval before production begins. My order will not go into production until I approve it.</label>
+      </div>
+
+      <input type="hidden" name="properties[Instant Preview Decoration]" value="Laser Engraved" data-preview-decoration>
+      <input type="hidden" name="properties[Instant Preview Size]" value="30%" data-preview-size-property>
+      <input type="hidden" name="properties[Instant Preview Position]" value="48%" data-preview-position-property>
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
-      <div class="qty-row"><input type="number" name="quantity" min="1" value="1" aria-label="Quantity"><button class="button" type="submit" data-add-button {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}><span data-add-label>{% if product.selected_or_first_available_variant.available %}Add to Cart{% else %}Sold Out{% endif %}</span></button></div>
+
+      <div class="product-form-error" data-product-error role="alert"></div>
+      <div class="qty-row">
+        <input type="number" name="quantity" min="1" value="1" aria-label="Quantity">
+        <button class="button" type="submit" data-add-button {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          <span data-add-label>{% if product.selected_or_first_available_variant.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
+        </button>
+      </div>
     {% endform %}
-    <div class="micro-trust"><div>Digital proof included</div><div>Made to order</div><div>Pickup or shipping</div></div>
+
+    <div class="micro-trust">
+      <div>Complimentary taped proof by text</div>
+      <div>Production begins only after your approval</div>
+      <div>Personalized in Illinois</div>
+      <div>Pickup or shipping available</div>
+    </div>
   </div>
+
   <script type="application/json" data-product-json>{{ product | json }}</script>
 </section>
-{% schema %}{"name":"Main product","settings":[{"type":"checkbox","id":"show_decoration","label":"Show decoration method","default":true},{"type":"checkbox","id":"laser_only","label":"Laser only (use for handled tumblers)","default":false}]}{% endschema %}
+
+{% schema %}
+{
+  "name":"Main product",
+  "settings":[
+    {"type":"checkbox","id":"show_decoration","label":"Show decoration method","default":true},
+    {"type":"checkbox","id":"laser_only","label":"Laser only (use for handled tumblers)","default":false}
+  ]
+}
+{% endschema %}
