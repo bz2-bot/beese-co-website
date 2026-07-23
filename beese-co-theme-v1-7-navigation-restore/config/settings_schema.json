@@ -1,0 +1,25 @@
+[
+  {
+    "name": "Theme settings",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Ink",
+        "default": "#111111"
+      },
+      {
+        "type": "color",
+        "id": "color_paper",
+        "label": "Paper",
+        "default": "#fbf8f3"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Gold",
+        "default": "#b98945"
+      }
+    ]
+  }
+]

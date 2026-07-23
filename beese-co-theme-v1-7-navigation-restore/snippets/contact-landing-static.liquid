@@ -1,0 +1,22 @@
+<section class="guide-landing guide-landing--contact">
+  <div class="guide-hero">
+    <div class="guide-hero__copy"><div class="eyebrow">Contact</div><h1 class="heading heading-lg">Tell us what you are making.</h1><div class="guide-hero__accent">We will help you get started.</div><p>Have a question, an idea or artwork ready to go? Send the details below.</p></div>
+    <div class="guide-hero__media"><img src="{{ 'placeholder-story.svg' | asset_url }}" class="theme-placeholder-image" alt="Contact Beese and Co photo placeholder" loading="eager"></div>
+  </div>
+  <div class="page-width guide-landing__body">
+    <div class="contact-layout">
+      <div class="contact-panel"><div class="eyebrow">Start the conversation</div><h2 class="heading heading-md">What can we create for you?</h2><p>Share as much as you know. Product, quantity, deadline, wording, artwork and occasion are all helpful—but you do not need every answer before reaching out.</p><div class="contact-note"><strong>Digital proof by text</strong><span>Please include the best phone number for your proof. Production will not begin until you approve it.</span></div><div class="contact-note"><strong>Need inspiration?</strong><span>Tell us the person, event or goal. We will help narrow down the options.</span></div></div>
+      <div class="contact-form-card">
+        {% form 'contact' %}
+          {% if form.posted_successfully? %}<p class="form-success">Thank you! Your message has been sent.</p>{% endif %}
+          {{ form.errors | default_errors }}
+          <div class="field-grid"><div><label for="ContactName">Name</label><input id="ContactName" type="text" name="contact[name]" value="{{ form.name }}" required></div><div><label for="ContactEmail">Email</label><input id="ContactEmail" type="email" name="contact[email]" value="{{ form.email }}" required></div></div>
+          <div class="field-grid"><div><label for="ContactPhone">Phone number for proof</label><input id="ContactPhone" type="tel" name="contact[phone]" value="{{ form.phone }}"></div><div><label for="ContactQuantity">Estimated quantity</label><input id="ContactQuantity" type="text" name="contact[Estimated quantity]"></div></div>
+          <label for="ContactProject">What are you interested in?</label><select id="ContactProject" name="contact[Project type]"><option>Tumblers</option><option>Ornaments</option><option>Golf Balls &amp; More</option><option>Bulk Order</option><option>Personalized Gift</option><option>Something Else</option></select>
+          <label for="ContactBody">Tell us about your project</label><textarea id="ContactBody" name="contact[body]" rows="7" required>{{ form.body }}</textarea>
+          <button class="button" type="submit">Send My Project →</button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>

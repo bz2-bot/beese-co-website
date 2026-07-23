@@ -1,0 +1,35 @@
+<section class="guide-landing guide-landing--ornaments">
+  <div class="guide-hero">
+    <div class="guide-hero__copy">
+      <div class="eyebrow">Ornaments</div>
+      <h1 class="heading heading-lg">Made to remember.</h1>
+      <div class="guide-hero__accent">Personalized for your moments.</div>
+      <p>Custom ornaments created one piece at a time for the people, pets and memories that matter.</p>
+    </div>
+    <div class="guide-hero__media"><img src="{{ 'placeholder-collection.svg' | asset_url }}" class="theme-placeholder-image" alt="Ornament hero photo placeholder" loading="eager"></div>
+  </div>
+
+  <div class="page-width guide-landing__body">
+    <div class="section-heading"><span></span><h2>How would you like to shop?</h2><span></span></div>
+    <div class="guide-path-grid">
+      <a class="guide-path-card" href="/collections/custom-ornaments">
+        <div class="guide-path-card__media"><img src="{{ 'placeholder-category.svg' | asset_url }}" class="theme-placeholder-image" alt="Custom ornament placeholder" loading="lazy"></div>
+        <div class="guide-path-card__copy"><div class="eyebrow">Create something personal</div><h3 class="heading heading-md">Create a Custom Ornament</h3><p>Photos, names, dates, handwriting, memorial pieces and one-of-a-kind keepsakes.</p><span class="button">Start Custom Ornament →</span></div>
+      </a>
+      <a class="guide-path-card" href="/collections/ornaments">
+        <div class="guide-path-card__media"><img src="{{ 'placeholder-category.svg' | asset_url }}" class="theme-placeholder-image" alt="Ornament ideas placeholder" loading="lazy"></div>
+        <div class="guide-path-card__copy"><div class="eyebrow">Looking for inspiration?</div><h3 class="heading heading-md">Browse Ideas &amp; Occasions</h3><p>Explore ornament ideas by occasion, or reach out when you do not see exactly what you need.</p><span class="button button--gold">Browse Ornament Ideas →</span></div>
+      </a>
+    </div>
+
+    <div class="section-heading section-heading--sizes"><span></span><h2>Shop by occasion</h2><span></span></div>
+    <div class="quick-link-grid quick-link-grid--seven">
+      {% assign titles = 'Christmas|Memorial|Baby|Pet|Family|Wedding|Custom Ornament' | split: '|' %}
+      {% assign links = '/collections/christmas-ornaments|/collections/memorial-ornaments|/collections/baby-ornaments|/collections/pet-ornaments|/collections/family-ornaments|/collections/wedding-ornaments|/collections/custom-ornaments' | split: '|' %}
+      {% for title in titles %}<a class="quick-link-card" href="{{ links[forloop.index0] }}"><div class="quick-link-card__media"><img src="{{ 'placeholder-category.svg' | asset_url }}" class="theme-placeholder-image" alt="{{ title }} photo placeholder" loading="lazy"></div><div class="quick-link-card__copy"><h3>{{ title }}</h3><span>Shop now →</span></div></a>{% endfor %}
+    </div>
+
+    <div class="landing-benefits"><div class="section-heading"><span></span><h2>Why choose Beese ornaments?</h2><span></span></div><div class="landing-benefits__grid"><div><strong>Proof Before Production</strong><span>Approve your ornament before we make it.</span></div><div><strong>Made One at a Time</strong><span>Personalized with care in Northern Illinois.</span></div><div><strong>Photo &amp; Text Options</strong><span>Create a keepsake that feels truly personal.</span></div><div><strong>Small Business</strong><span>Every order matters here.</span></div></div></div>
+    <div class="tumbler-help"><div class="tumbler-help__icon">•••</div><div><h2 class="heading heading-md">Do not see what you need?</h2><p>Tell us what you are imagining and we will help you create it.</p></div><a class="button" href="/pages/contact">Contact Dana →</a></div>
+  </div>
+</section>

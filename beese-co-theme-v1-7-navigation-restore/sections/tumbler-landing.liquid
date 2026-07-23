@@ -1,0 +1,193 @@
+<section class="tumbler-shop" data-tumbler-shop>
+  <div class="tumbler-shop__hero">
+    <div class="tumbler-shop__hero-copy">
+      {% if section.settings.eyebrow != blank %}<div class="eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+      <h1 class="heading heading-xl">{{ section.settings.heading }}</h1>
+      {% if section.settings.accent_heading != blank %}<div class="tumbler-shop__accent">{{ section.settings.accent_heading }}</div>{% endif %}
+      {% if section.settings.intro != blank %}<p>{{ section.settings.intro }}</p>{% endif %}
+      <div class="tumbler-shop__hero-actions">
+        <a class="button" href="#create-custom">{{ section.settings.primary_button }} →</a>
+        <a class="tumbler-shop__text-link" href="#shop-by-size">Shop by size ↓</a>
+      </div>
+    </div>
+    <div class="tumbler-shop__hero-media">
+      {% if section.settings.hero_image != blank %}
+        {{ section.settings.hero_image | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750,1100,1500,1800', sizes: '(min-width: 900px) 55vw, 100vw' }}
+      {% else %}
+        <img src="{{ 'placeholder-hero.svg' | asset_url }}" class="theme-placeholder-image" alt="Tumbler hero photo placeholder" loading="eager">
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="page-width tumbler-shop__workspace">
+    <nav class="tumbler-shop__nav" aria-label="Tumbler shopping navigation">
+    <div class="tumbler-shop__nav-inner">
+      <a class="tumbler-shop__nav-item is-active" href="#top" data-tumbler-nav>Overview</a>
+      <a class="tumbler-shop__nav-item" href="#create-custom" data-tumbler-nav>Create custom</a>
+      <a class="tumbler-shop__nav-item" href="#shop-by-size" data-tumbler-nav>Shop by size</a>
+      {% for block in section.blocks %}
+        {% if block.type == 'size_section' %}
+          {% assign size_anchor = block.settings.anchor | handleize %}
+          <a class="tumbler-shop__nav-item tumbler-shop__nav-item--size" href="#{{ size_anchor }}" data-tumbler-nav>{{ block.settings.nav_label | default: block.settings.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    </nav>
+
+
+    <div class="tumbler-shop__content">
+  <div id="top" class="tumbler-shop__anchor" aria-hidden="true"></div>
+
+  <div class="tumbler-shop__body">
+    <section id="create-custom" class="tumbler-shop__custom tumbler-shop__section" data-tumbler-section>
+      <div class="tumbler-shop__custom-copy">
+        {% if section.settings.custom_eyebrow != blank %}<div class="eyebrow">{{ section.settings.custom_eyebrow }}</div>{% endif %}
+        <h2 class="heading heading-lg">{{ section.settings.custom_heading }}</h2>
+        {% if section.settings.custom_text != blank %}<p>{{ section.settings.custom_text }}</p>{% endif %}
+        <div class="tumbler-shop__custom-steps" aria-label="Custom tumbler steps">
+          <span>1. Pick a size</span>
+          <span>2. Pick a color</span>
+          <span>3. Choose laser or UV</span>
+          <span>4. Personalize it</span>
+        </div>
+        {% if section.settings.custom_product != blank %}
+          <a class="button" href="{{ section.settings.custom_product.url }}">{{ section.settings.custom_button }} →</a>
+        {% else %}
+          <a class="button" href="#shop-by-size">Choose your size →</a>
+        {% endif %}
+      </div>
+      <div class="tumbler-shop__custom-media">
+        {% if section.settings.custom_image != blank %}
+          {{ section.settings.custom_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '500,800,1200', sizes: '(min-width: 900px) 45vw, 100vw' }}
+        {% else %}
+          <img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="Custom tumbler placeholder" loading="lazy">
+        {% endif %}
+      </div>
+    </section>
+
+    <section id="shop-by-size" class="tumbler-shop__section tumbler-shop__size-jump" data-tumbler-section>
+      <div class="section-heading"><span></span><h2>{{ section.settings.size_heading }}</h2><span></span></div>
+      {% if section.settings.size_intro != blank %}<p class="tumbler-shop__section-intro">{{ section.settings.size_intro }}</p>{% endif %}
+      <div class="tumbler-shop__size-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'size_section' %}
+            {% assign size_anchor = block.settings.anchor | handleize %}
+            <a class="tumbler-shop__size-card" href="#{{ size_anchor }}" {{ block.shopify_attributes }}>
+              <div class="tumbler-shop__size-card-media">
+                {% if block.settings.image != blank %}
+                  {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '260,420,700', sizes: '(min-width: 1000px) 15vw, (min-width: 600px) 30vw, 44vw' }}
+                {% elsif block.settings.collection.featured_image != blank %}
+                  {{ block.settings.collection.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '260,420,700', sizes: '(min-width: 1000px) 15vw, (min-width: 600px) 30vw, 44vw' }}
+                {% else %}
+                  <img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="{{ block.settings.title | escape }} placeholder" loading="lazy">
+                {% endif %}
+              </div>
+              <div class="tumbler-shop__size-card-copy">
+                <h3>{{ block.settings.title }}</h3>
+                {% if block.settings.short_text != blank %}<p>{{ block.settings.short_text }}</p>{% endif %}
+                <span>Shop this size ↓</span>
+              </div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    {% for block in section.blocks %}
+      {% if block.type == 'size_section' %}
+        {% assign size_anchor = block.settings.anchor | handleize %}
+        {% assign has_products = false %}
+        {% if block.settings.collection != blank and block.settings.collection.products_count > 0 %}{% assign has_products = true %}{% endif %}
+        {% if has_products or block.settings.custom_product != blank %}
+          <section id="{{ size_anchor }}" class="tumbler-shop__section tumbler-shop__size-section" data-tumbler-section {{ block.shopify_attributes }}>
+            <div class="tumbler-shop__size-header">
+              <div>
+                <h2 class="heading heading-lg">{{ block.settings.title }}</h2>
+                {% if block.settings.description != blank %}<p>{{ block.settings.description }}</p>{% endif %}
+              </div>
+              {% if block.settings.custom_product != blank %}
+                <a class="button button--gold" href="{{ block.settings.custom_product.url }}">Customize this size →</a>
+              {% endif %}
+            </div>
+
+            {% if has_products %}
+              <div class="collection-grid tumbler-shop__products">
+                {% for product in block.settings.collection.products limit: block.settings.products_to_show %}
+                  {% render 'product-card', product: product %}
+                {% endfor %}
+              </div>
+              {% if block.settings.collection.products_count > block.settings.products_to_show %}
+                <div class="tumbler-shop__more">
+                  <a class="tumbler-shop__text-link" href="{{ block.settings.collection.url }}">View every {{ block.settings.title }} tumbler →</a>
+                </div>
+              {% endif %}
+            {% endif %}
+          </section>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    <section class="tumbler-shop__help">
+      <div>
+        <div class="eyebrow">Need a hand?</div>
+        <h2 class="heading heading-md">{{ section.settings.help_heading }}</h2>
+        <p>{{ section.settings.help_text }}</p>
+      </div>
+      <a class="button" href="{{ section.settings.help_link | default: routes.root_url }}">{{ section.settings.help_button }} →</a>
+    </section>
+  </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tumblers shopping page",
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Hero eyebrow","default":"Tumblers"},
+    {"type":"text","id":"heading","label":"Hero heading","default":"Made to last."},
+    {"type":"text","id":"accent_heading","label":"Gold hero line","default":"Personalized for you."},
+    {"type":"textarea","id":"intro","label":"Hero text","default":"Choose your size, color and decoration style without bouncing through a maze of pages."},
+    {"type":"text","id":"primary_button","label":"Hero button","default":"Create a custom tumbler"},
+    {"type":"image_picker","id":"hero_image","label":"Hero image"},
+
+    {"type":"header","content":"Custom tumbler"},
+    {"type":"text","id":"custom_eyebrow","label":"Eyebrow","default":"Start with your idea"},
+    {"type":"text","id":"custom_heading","label":"Heading","default":"Create a Custom Tumbler"},
+    {"type":"textarea","id":"custom_text","label":"Text","default":"Pick the size, color and finish that fit what you have in mind. You will receive a digital proof before we make it."},
+    {"type":"text","id":"custom_button","label":"Button","default":"Start customizing"},
+    {"type":"product","id":"custom_product","label":"All-size custom tumbler product"},
+    {"type":"image_picker","id":"custom_image","label":"Custom section image"},
+
+    {"type":"header","content":"Shop by size"},
+    {"type":"text","id":"size_heading","label":"Heading","default":"Shop by size"},
+    {"type":"textarea","id":"size_intro","label":"Intro","default":"Know the size you want? Jump straight to it. Every size stays on this page until you choose a product."},
+
+    {"type":"header","content":"Help"},
+    {"type":"text","id":"help_heading","label":"Heading","default":"Still not sure where to start?"},
+    {"type":"textarea","id":"help_text","label":"Text","default":"Tell Dana what you have in mind and we will point you in the right direction."},
+    {"type":"text","id":"help_button","label":"Button","default":"Contact Dana"},
+    {"type":"url","id":"help_link","label":"Link"}
+  ],
+  "blocks": [
+    {
+      "type":"size_section",
+      "name":"Tumbler size section",
+      "limit":8,
+      "settings":[
+        {"type":"text","id":"anchor","label":"Section anchor","info":"Use a unique value such as 20-oz. Do not change it after sharing links.","default":"20-oz"},
+        {"type":"text","id":"nav_label","label":"Short navigation label","default":"20 oz"},
+        {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Find your fit"},
+        {"type":"text","id":"title","label":"Title","default":"20 oz Skinny"},
+        {"type":"text","id":"short_text","label":"Card description","default":"A classic everyday size."},
+        {"type":"textarea","id":"description","label":"Section description","default":"Browse ready-to-personalize designs or start with a blank tumbler in this size."},
+        {"type":"image_picker","id":"image","label":"Size card image"},
+        {"type":"collection","id":"collection","label":"Products for this size"},
+        {"type":"product","id":"custom_product","label":"Custom product for this size"},
+        {"type":"range","id":"products_to_show","label":"Products to show","min":2,"max":12,"step":2,"default":4}
+      ]
+    }
+  ],
+  "presets":[{"name":"Tumblers shopping page"}]
+}
+{% endschema %}

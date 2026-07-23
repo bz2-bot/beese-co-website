@@ -1,0 +1,60 @@
+<section class="section section--categories">
+  <div class="page-width">
+    <div class="section-title">
+      <h2 class="heading heading-md">{{ section.settings.heading }}</h2>
+    </div>
+
+    <div class="category-feature-grid">
+      {% for block in section.blocks %}
+        <a class="category-feature-card" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+          <div class="category-feature-card__media">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 25vw, (min-width: 620px) 50vw, 100vw' }}
+            {% else %}
+              <img src="{{ 'placeholder-category.svg' | asset_url }}" class="theme-placeholder-image" alt="Replace {{ block.settings.title | escape }} category photo" loading="lazy">
+            {% endif %}
+          </div>
+          <div class="category-feature-card__copy">
+            <h3>{{ block.settings.title }}</h3>
+            {% if block.settings.text != blank %}<p>{{ block.settings.text }}</p>{% endif %}
+            <span>{{ block.settings.label }} <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop by category",
+  "settings": [
+    {"type":"text","id":"heading","label":"Heading","default":"Shop by Category"}
+  ],
+  "blocks": [
+    {
+      "type":"category",
+      "name":"Category card",
+      "settings":[
+        {"type":"text","id":"title","label":"Title","default":"Drinkware"},
+        {"type":"text","id":"text","label":"Short description","default":"Tumblers & water bottles"},
+        {"type":"text","id":"label","label":"Link label","default":"Shop now"},
+        {"type":"image_picker","id":"image","label":"Image"},
+        {"type":"url","id":"link","label":"Link"}
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name":"Shop by category",
+      "blocks":[
+        {"type":"category","settings":{"title":"Drinkware","text":"Tumblers & water bottles"}},
+        {"type":"category","settings":{"title":"Full Color Printing","text":"Bright, bold & long lasting"}},
+        {"type":"category","settings":{"title":"Ornaments","text":"Personalized keepsakes"}},
+        {"type":"category","settings":{"title":"Golf Gifts","text":"Balls, tumblers & accessories"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

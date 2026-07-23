@@ -1,0 +1,70 @@
+<section class="tumbler-landing">
+  <div class="tumbler-landing__hero">
+    <div class="tumbler-landing__hero-copy">
+      <div class="eyebrow">Tumblers</div>
+      <h1 class="heading heading-xl">Made to last.</h1>
+      <div class="tumbler-landing__accent">Personalized for you.</div>
+      <p>Custom laser engraved and UV printed tumblers made one piece at a time in Northern Illinois.</p>
+    </div>
+    <div class="tumbler-landing__hero-media">
+      <img src="{{ 'placeholder-hero.svg' | asset_url }}" class="theme-placeholder-image" alt="Tumbler hero photo placeholder" loading="eager">
+    </div>
+  </div>
+
+  <div class="page-width tumbler-landing__body">
+    <div class="section-heading"><span></span><h2>How would you like to shop?</h2><span></span></div>
+
+    <div class="tumbler-path-grid">
+      <a class="tumbler-path-card tumbler-path-card--black" href="/collections/custom-tumblers">
+        <div class="tumbler-path-card__media"><img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="Custom tumbler photo placeholder" loading="lazy"></div>
+        <div class="tumbler-path-card__copy">
+          <div class="eyebrow">Create something unique</div>
+          <h3 class="heading heading-md">Create a Custom Tumbler</h3>
+          <p>Your idea. Your design. Our craftsmanship.</p>
+          <div class="tumbler-path-card__points">Upload artwork<br>Business logos<br>Wedding gifts<br>Names &amp; monograms<br>One or one hundred</div>
+          <span class="button">Start Custom Order →</span>
+        </div>
+      </a>
+
+      <a class="tumbler-path-card tumbler-path-card--gold" href="/collections/ready-to-buy-tumblers">
+        <div class="tumbler-path-card__media"><img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="Ideas and themes photo placeholder" loading="lazy"></div>
+        <div class="tumbler-path-card__copy">
+          <div class="eyebrow">Looking for inspiration?</div>
+          <h3 class="heading heading-md">Browse Ideas &amp; Themes</h3>
+          <p>Explore designs and themes, or reach out when you don't see exactly what you need.</p>
+          <div class="tumbler-path-card__points">Football<br>Camping<br>Book Lovers<br>Funny<br>Holiday<br>And more</div>
+          <span class="button button--gold">Browse Ideas →</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="section-heading section-heading--sizes"><span></span><h2>Shop by size</h2><span></span></div>
+    <div class="tumbler-size-grid">
+      {% assign size_titles = '20 oz Skinny|22 oz Skinny|30 oz Tumbler|40 oz Tumbler|40 oz Tumbler with Handle|Water Bottles' | split: '|' %}
+      {% assign size_links = '/collections/20-oz-skinny|/collections/22-oz-skinny|/collections/30-oz-tumblers|/collections/40-oz-tumblers|/collections/40-oz-handled-tumblers|/collections/water-bottles' | split: '|' %}
+      {% for title in size_titles %}
+        <a class="tumbler-size-card" href="{{ size_links[forloop.index0] }}">
+          <div class="tumbler-size-card__media"><img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="{{ title }} photo placeholder" loading="lazy"></div>
+          <div class="tumbler-size-card__copy"><h3>{{ title }}</h3><span>View Tumblers →</span></div>
+        </a>
+      {% endfor %}
+    </div>
+
+    <div class="tumbler-benefits">
+      <div class="section-heading"><span></span><h2>Why choose Beese tumblers?</h2><span></span></div>
+      <div class="tumbler-benefits__grid">
+        <div class="tumbler-benefit"><div class="tumbler-benefit__icon">☆</div><h3>Proof Before Production</h3><p>Digital proof included with every order.</p></div>
+        <div class="tumbler-benefit"><div class="tumbler-benefit__icon">◇</div><h3>Built to Last</h3><p>Quality materials and long-lasting results.</p></div>
+        <div class="tumbler-benefit"><div class="tumbler-benefit__icon">✦</div><h3>Laser &amp; UV Printing</h3><p>Precision laser engraving and vibrant UV printing.</p></div>
+        <div class="tumbler-benefit"><div class="tumbler-benefit__icon">⌖</div><h3>Made in Illinois</h3><p>Proudly made in Northern Illinois.</p></div>
+        <div class="tumbler-benefit"><div class="tumbler-benefit__icon">♡</div><h3>Small Business</h3><p>Thank you for supporting a small business.</p></div>
+      </div>
+    </div>
+
+    <div class="tumbler-help">
+      <div class="tumbler-help__icon">•••</div>
+      <div><h2 class="heading heading-md">Still not sure where to start?</h2><p>We're here to help you create the perfect tumbler.</p></div>
+      <a class="button" href="/pages/contact">Contact Dana →</a>
+    </div>
+  </div>
+</section>

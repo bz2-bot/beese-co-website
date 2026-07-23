@@ -1,0 +1,29 @@
+<section class="guide-landing guide-landing--golf">
+  <div class="guide-hero">
+    <div class="guide-hero__copy">
+      <div class="eyebrow">Golf Balls &amp; More</div>
+      <h1 class="heading heading-lg">Personalized beyond drinkware.</h1>
+      <div class="guide-hero__accent">Made for your people.</div>
+      <p>Choose the product you want to personalize, then send your artwork or tell us your idea.</p>
+    </div>
+    <div class="guide-hero__media"><img src="{{ 'placeholder-collection.svg' | asset_url }}" class="theme-placeholder-image" alt="Golf balls and specialty products hero placeholder" loading="eager"></div>
+  </div>
+
+  <div class="page-width guide-landing__body">
+    <div class="section-heading"><span></span><h2>What would you like to personalize?</h2><span></span></div>
+    <div class="quick-link-grid quick-link-grid--six">
+      {% assign titles = 'Golf Balls|Poker Chips|Awards & Plaques|Wood Products|Acrylic|Leatherette' | split: '|' %}
+      {% assign links = '/collections/golf-balls|/collections/poker-chips|/collections/awards-plaques|/collections/wood-products|/collections/acrylic|/collections/leatherette' | split: '|' %}
+      {% for title in titles %}<a class="quick-link-card" href="{{ links[forloop.index0] }}"><div class="quick-link-card__media"><img src="{{ 'placeholder-category.svg' | asset_url }}" class="theme-placeholder-image" alt="{{ title }} photo placeholder" loading="lazy"></div><div class="quick-link-card__copy"><h3>{{ title }}</h3><span>Shop now →</span></div></a>{% endfor %}
+    </div>
+
+    <div class="section-heading section-heading--sizes"><span></span><h2>How can we help?</h2><span></span></div>
+    <div class="guide-path-grid">
+      <a class="guide-path-card" href="/collections/all?view=custom-orders"><div class="guide-path-card__media"><img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="Custom specialty product placeholder" loading="lazy"></div><div class="guide-path-card__copy"><div class="eyebrow">Have artwork ready?</div><h3 class="heading heading-md">Start a Custom Project</h3><p>Upload your logo, design or personalization and tell us which product you have in mind.</p><span class="button">Start Your Project →</span></div></a>
+      <a class="guide-path-card" href="/collections/all?view=contact"><div class="guide-path-card__media"><img src="{{ 'placeholder-category.svg' | asset_url }}" class="theme-placeholder-image" alt="Specialty product idea placeholder" loading="lazy"></div><div class="guide-path-card__copy"><div class="eyebrow">Not seeing it?</div><h3 class="heading heading-md">Tell Us What You Need</h3><p>Our specialty catalog will keep growing. Reach out and we will help you find the right product.</p><span class="button button--gold">Contact Dana →</span></div></a>
+    </div>
+
+    <div class="landing-benefits"><div class="section-heading"><span></span><h2>Why choose Beese?</h2><span></span></div><div class="landing-benefits__grid"><div><strong>Proof Before Production</strong><span>See and approve placement before we begin.</span></div><div><strong>Laser or Full Color</strong><span>The right decoration method for the product.</span></div><div><strong>One or Bulk</strong><span>Personal gifts and larger orders are welcome.</span></div><div><strong>Made in Illinois</strong><span>Handled by a real small business.</span></div></div></div>
+    <div class="tumbler-help"><div class="tumbler-help__icon">•••</div><div><h2 class="heading heading-md">Have something else in mind?</h2><p>Tell us what you are trying to make and we will point you in the right direction.</p></div><a class="button" href="/collections/all?view=contact">Contact Dana →</a></div>
+  </div>
+</section>

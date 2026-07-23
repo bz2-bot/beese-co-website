@@ -1,0 +1,27 @@
+<section class="collection-page">
+  <header class="collection-intro page-width">
+    <div class="eyebrow">Shop Beese &amp; Co.</div>
+    <h1 class="heading heading-lg">{{ collection.title }}</h1>
+    {% if section.settings.show_short_intro and section.settings.short_intro != blank %}
+      <p class="collection-intro__text">{{ section.settings.short_intro }}</p>
+    {% endif %}
+  </header>
+  <div class="page-width collection-products">
+    <div class="collection-grid">
+      {% for product in collection.products %}
+        {% render 'product-card', product: product %}
+      {% else %}
+        <p>No products have been added to this collection yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Main collection",
+  "settings":[
+    {"type":"checkbox","id":"show_short_intro","label":"Show short collection introduction","default":true},
+    {"type":"text","id":"short_intro","label":"Short introduction","default":"Choose your product, then personalize it your way."}
+  ]
+}
+{% endschema %}

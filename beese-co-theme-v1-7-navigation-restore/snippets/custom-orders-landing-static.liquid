@@ -1,0 +1,29 @@
+<section class="guide-landing guide-landing--custom">
+  <div class="guide-hero">
+    <div class="guide-hero__copy">
+      <div class="eyebrow">Custom Orders</div>
+      <h1 class="heading heading-lg">Bring us the idea.</h1>
+      <div class="guide-hero__accent">We will help make it real.</div>
+      <p>Choose a project type, upload artwork if you have it, or simply tell us what you are imagining.</p>
+    </div>
+    <div class="guide-hero__media"><img src="{{ 'placeholder-collection.svg' | asset_url }}" class="theme-placeholder-image" alt="Custom order hero photo placeholder" loading="eager"></div>
+  </div>
+
+  <div class="page-width guide-landing__body">
+    <div class="section-heading"><span></span><h2>What are you creating?</h2><span></span></div>
+    <div class="quick-link-grid quick-link-grid--six">
+      {% assign titles = 'Drinkware|Ornaments|Personalized Gifts|Business Gifts|Wedding Gifts|Team Gifts' | split: '|' %}
+      {% assign links = '/collections/tumblers|/collections/all?view=ornaments|/collections/personalized-gifts|/collections/business-gifts|/collections/wedding-gifts|/collections/team-gifts' | split: '|' %}
+      {% for title in titles %}<a class="quick-link-card" href="{{ links[forloop.index0] }}"><div class="quick-link-card__media"><img src="{{ 'placeholder-category.svg' | asset_url }}" class="theme-placeholder-image" alt="{{ title }} photo placeholder" loading="lazy"></div><div class="quick-link-card__copy"><h3>{{ title }}</h3><span>Get started →</span></div></a>{% endfor %}
+    </div>
+
+    <div class="section-heading section-heading--sizes"><span></span><h2>Start where you are</h2><span></span></div>
+    <div class="guide-path-grid">
+      <a class="guide-path-card" href="/collections/all?view=contact"><div class="guide-path-card__media"><img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="Upload artwork placeholder" loading="lazy"></div><div class="guide-path-card__copy"><div class="eyebrow">Artwork ready?</div><h3 class="heading heading-md">Upload Your Design</h3><p>Send your logo, artwork, name or wording and tell us what product you want.</p><span class="button">Upload Artwork →</span></div></a>
+      <a class="guide-path-card" href="/collections/all?view=contact"><div class="guide-path-card__media"><img src="{{ 'placeholder-category.svg' | asset_url }}" class="theme-placeholder-image" alt="Custom idea placeholder" loading="lazy"></div><div class="guide-path-card__copy"><div class="eyebrow">Just have an idea?</div><h3 class="heading heading-md">Tell Us About It</h3><p>You do not need a finished file. Share the occasion, quantity and what you want it to feel like.</p><span class="button button--gold">Tell Dana Your Idea →</span></div></a>
+    </div>
+
+    <div class="landing-benefits"><div class="section-heading"><span></span><h2>How custom orders work</h2><span></span></div><div class="landing-benefits__grid"><div><strong>1. Tell Us</strong><span>Choose a product or describe your idea.</span></div><div><strong>2. Review Proof</strong><span>You receive a digital proof by text.</span></div><div><strong>3. Approve</strong><span>Production begins only after approval.</span></div><div><strong>4. We Make It</strong><span>Your order is created one piece at a time.</span></div></div></div>
+    <div class="tumbler-help"><div class="tumbler-help__icon">•••</div><div><h2 class="heading heading-md">Not sure which path fits?</h2><p>Reach out. A real conversation is often the fastest way to get the right answer.</p></div><a class="button" href="/collections/all?view=contact">Contact Dana →</a></div>
+  </div>
+</section>

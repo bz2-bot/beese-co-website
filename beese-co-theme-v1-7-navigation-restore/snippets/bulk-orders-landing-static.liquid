@@ -1,0 +1,23 @@
+<section class="guide-landing guide-landing--bulk">
+  <div class="guide-hero">
+    <div class="guide-hero__copy"><div class="eyebrow">Bulk Orders</div><h1 class="heading heading-lg">Your order. Your artwork.</h1><div class="guide-hero__accent">Made simple.</div><p>Choose the product and size, then send your design or tell us what you need.</p></div>
+    <div class="guide-hero__media"><img src="{{ 'placeholder-collection.svg' | asset_url }}" class="theme-placeholder-image" alt="Bulk order hero photo placeholder" loading="eager"></div>
+  </div>
+  <div class="page-width guide-landing__body">
+    <div class="section-heading"><span></span><h2>Start your bulk order</h2><span></span></div>
+    <div class="guide-path-grid">
+      <a class="guide-path-card" href="/pages/contact"><div class="guide-path-card__media"><img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="Upload design placeholder" loading="lazy"></div><div class="guide-path-card__copy"><div class="eyebrow">Artwork ready?</div><h3 class="heading heading-md">Upload Your Design</h3><p>Choose your size, send production-ready artwork and tell us the quantity you need.</p><span class="button">Upload Design →</span></div></a>
+      <a class="guide-path-card" href="/pages/contact"><div class="guide-path-card__media"><img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="Bulk order idea placeholder" loading="lazy"></div><div class="guide-path-card__copy"><div class="eyebrow">Need help?</div><h3 class="heading heading-md">Tell Us Your Idea</h3><p>Share the event, audience, quantity and goal. We will help point you toward the right product.</p><span class="button button--gold">Tell Us About It →</span></div></a>
+    </div>
+
+    <div class="section-heading section-heading--sizes"><span></span><h2>Shop bulk tumblers by size</h2><span></span></div>
+    <div class="quick-link-grid quick-link-grid--six">
+      {% assign titles = '20 oz Skinny|22 oz Skinny|30 oz Tumbler|40 oz Tumbler|40 oz Handled|Water Bottles' | split: '|' %}
+      {% assign links = '/collections/20-oz-skinny|/collections/22-oz-skinny|/collections/30-oz-tumblers|/collections/40-oz-tumblers|/collections/40-oz-handled-tumblers|/collections/water-bottles' | split: '|' %}
+      {% for title in titles %}<a class="quick-link-card" href="{{ links[forloop.index0] }}"><div class="quick-link-card__media"><img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image" alt="{{ title }} bulk photo placeholder" loading="lazy"></div><div class="quick-link-card__copy"><h3>{{ title }}</h3><span>Start order →</span></div></a>{% endfor %}
+    </div>
+
+    <div class="landing-benefits"><div class="section-heading"><span></span><h2>Bulk orders without the nonsense</h2><span></span></div><div class="landing-benefits__grid"><div><strong>Proof Before Production</strong><span>Nothing begins until you approve it.</span></div><div><strong>One or One Hundred</strong><span>Clear options for the quantity you need.</span></div><div><strong>Laser or Full Color</strong><span>We will use the decoration method that fits the product.</span></div><div><strong>Made in Illinois</strong><span>Handled by a real small business.</span></div></div></div>
+    <div class="tumbler-help"><div class="tumbler-help__icon">•••</div><div><h2 class="heading heading-md">Have a project in mind?</h2><p>Tell us what you are trying to accomplish. We will help you build the order.</p></div><a class="button" href="/pages/contact">Start a Conversation →</a></div>
+  </div>
+</section>

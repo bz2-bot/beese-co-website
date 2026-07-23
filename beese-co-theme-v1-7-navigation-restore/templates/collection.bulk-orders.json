@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "bulk-orders-landing",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

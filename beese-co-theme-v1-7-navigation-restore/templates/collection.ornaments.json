@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "ornaments-landing",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
