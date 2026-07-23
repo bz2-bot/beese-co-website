@@ -81,12 +81,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const json = root.querySelector('[data-product-json]');
     const form = root.querySelector('[data-product-form]');
     if (!json || !form) return;
+
     const product = JSON.parse(json.textContent);
     const idInput = form.querySelector('[data-variant-id]');
     const price = root.querySelector('[data-product-price]');
     const button = form.querySelector('[data-add-button]');
     const label = form.querySelector('[data-add-label]');
+    const error = form.querySelector('[data-product-error]');
+    const artworkInput = form.querySelector('[data-artwork-upload]');
+    const artworkPreview = root.querySelector('[data-artwork-preview]');
+    const previewControls = form.querySelector('[data-preview-controls]');
+    const sizeControl = form.querySelector('[data-preview-size]');
+    const positionControl = form.querySelector('[data-preview-position]');
+    const sizeValue = form.querySelector('[data-size-value]');
+    const positionValue = form.querySelector('[data-position-value]');
+    const sizeProperty = form.querySelector('[data-preview-size-property]');
+    const positionProperty = form.querySelector('[data-preview-position-property]');
+    const decorationProperty = form.querySelector('[data-preview-decoration]');
+    const decorationHelp = form.querySelector('[data-decoration-help]');
     const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', { style: 'currency', currency: window.Shopify?.currency?.active || 'USD' }).format(cents / 100);
+
+    const setError = (message = '') => {
+      if (!error) return;
+      error.textContent = message;
+      error.classList.toggle('is-visible', Boolean(message));
+    };
 
     const updateVariant = () => {
       const selections = [...form.querySelectorAll('[data-option-position]')].map((field) => field.querySelector('input:checked')?.value);
@@ -107,12 +126,79 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     form.querySelectorAll('[data-option-position] input').forEach((input) => input.addEventListener('change', updateVariant));
 
-    const decoration = form.querySelector('[data-decoration-choice]');
-    if (decoration) decoration.addEventListener('change', (event) => {
-      const val = (event.target.value || '').toLowerCase();
+    const applyDecorationPreview = () => {
+      const selected = form.querySelector('[data-decoration-choice] input:checked');
+      const value = selected?.value || 'Laser Engraved';
+      const isEngraved = value.toLowerCase().includes('laser');
+      artworkPreview?.classList.toggle('is-engraved', isEngraved);
+      if (decorationProperty) decorationProperty.value = value;
+      if (decorationHelp) decorationHelp.textContent = isEngraved
+        ? 'Laser engraving previews your uploaded artwork in engraved gray.'
+        : 'Full color keeps the original colors from your uploaded artwork.';
+
       const gallery = root.querySelector('[data-product-gallery]');
-      const match = [...(gallery?.querySelectorAll('[data-thumb]') || [])].find((thumb) => (thumb.dataset.tags || '').toLowerCase().includes(val.includes('full') ? 'full color' : 'laser'));
+      const match = [...(gallery?.querySelectorAll('[data-thumb]') || [])].find((thumb) => (thumb.dataset.tags || '').toLowerCase().includes(isEngraved ? 'laser' : 'full color'));
       if (match) match.click();
+    };
+
+    form.querySelector('[data-decoration-choice]')?.addEventListener('change', applyDecorationPreview);
+    applyDecorationPreview();
+
+    artworkInput?.addEventListener('change', () => {
+      setError();
+      const file = artworkInput.files?.[0];
+      if (!file) {
+        artworkPreview?.classList.remove('is-visible');
+        previewControls?.classList.remove('is-visible');
+        return;
+      }
+      const previewable = ['image/png', 'image/jpeg', 'image/svg+xml'].includes(file.type);
+      if (!previewable) {
+        artworkPreview?.classList.remove('is-visible');
+        previewControls?.classList.remove('is-visible');
+        setError('Your file will be attached to the order, but PDF artwork cannot be shown in the instant preview.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (!artworkPreview) return;
+        artworkPreview.src = reader.result;
+        artworkPreview.classList.add('is-visible');
+        previewControls?.classList.add('is-visible');
+        applyDecorationPreview();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    sizeControl?.addEventListener('input', () => {
+      const value = `${sizeControl.value}%`;
+      if (artworkPreview) artworkPreview.style.width = value;
+      if (sizeValue) sizeValue.textContent = value;
+      if (sizeProperty) sizeProperty.value = value;
+    });
+
+    positionControl?.addEventListener('input', () => {
+      const value = `${positionControl.value}%`;
+      if (artworkPreview) artworkPreview.style.top = value;
+      if (positionValue) positionValue.textContent = value;
+      if (positionProperty) positionProperty.value = value;
+    });
+
+    form.addEventListener('submit', (event) => {
+      setError();
+      const phone = form.querySelector('#Phone');
+      const proof = form.querySelector('#Proof');
+      if (!phone?.value.trim()) {
+        event.preventDefault();
+        setError('Enter the mobile number where you want to receive your taped proof.');
+        phone?.focus();
+        return;
+      }
+      if (!proof?.checked) {
+        event.preventDefault();
+        setError('Please confirm the taped proof agreement before adding this item to your cart.');
+        proof?.focus();
+      }
     });
   });
 
