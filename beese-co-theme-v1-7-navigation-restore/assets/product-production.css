@@ -1,14 +1,37 @@
+.product-page,
+.product-page *,
+.product-page *::before,
+.product-page *::after {
+  box-sizing: border-box;
+}
+
 .product-page {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
   gap: clamp(2rem, 5vw, 5rem);
   align-items: start;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding-top: clamp(1.5rem, 4vw, 3.5rem);
   padding-bottom: clamp(3rem, 7vw, 6rem);
+  overflow-x: clip;
+}
+
+.product-gallery,
+.product-form-wrap,
+.product-form-wrap form,
+.field,
+.choice-row,
+.preview-controls,
+.qty-row,
+.product-related-links {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .product-gallery {
-  min-width: 0;
+  width: 100%;
 }
 
 .product-gallery__stage {
@@ -16,13 +39,17 @@
   display: grid;
   place-items: center;
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 24px;
   background: #f5f2ec;
 }
 
 .product-gallery__main {
+  display: block;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   object-fit: contain;
   transition: opacity 0.15s ease;
@@ -68,21 +95,27 @@
   position: absolute;
   left: 1rem;
   bottom: 1rem;
+  max-width: calc(100% - 2rem);
   padding: 0.55rem 0.8rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.94);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+  line-height: 1.25;
   text-transform: uppercase;
+  white-space: normal;
 }
 
 .product-thumbs {
   display: flex;
   gap: 0.75rem;
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   padding: 0.9rem 0 0.2rem;
   scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 
 .product-thumb {
@@ -108,11 +141,13 @@
 .product-form-wrap {
   position: sticky;
   top: calc(var(--beese-header-height, 100px) + 1rem);
+  width: 100%;
   padding: clamp(1.4rem, 3vw, 2.25rem);
   border: 1px solid #e4ded5;
   border-radius: 24px;
   background: #fff;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+  overflow-wrap: anywhere;
 }
 
 .product-form-wrap .price {
@@ -122,9 +157,23 @@
 }
 
 .product-description {
+  max-width: 100%;
   margin-bottom: 1.5rem;
   color: #5c564e;
   line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.product-description img,
+.product-description iframe,
+.product-description video,
+.product-description table {
+  max-width: 100%;
+}
+
+.product-description table {
+  display: block;
+  overflow-x: auto;
 }
 
 .field {
@@ -136,14 +185,22 @@
 .field legend,
 .field > label {
   display: block;
+  max-width: 100%;
   margin-bottom: 0.55rem;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .choice-row {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
+  width: 100%;
+}
+
+.choice {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .choice input {
@@ -154,11 +211,13 @@
 
 .choice label {
   display: block;
+  max-width: 100%;
   padding: 0.65rem 0.95rem;
   border: 1px solid #d7d0c6;
   border-radius: 999px;
   background: #fff;
   cursor: pointer;
+  overflow-wrap: anywhere;
 }
 
 .choice input:checked + label {
@@ -183,12 +242,20 @@
 .field input[type='tel'],
 .field input[type='file'],
 .field textarea {
+  display: block;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   padding: 0.85rem 1rem;
   border: 1px solid #d7d0c6;
   border-radius: 12px;
   background: #fff;
   font: inherit;
+}
+
+.field input[type='file'] {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .field textarea {
@@ -198,9 +265,11 @@
 
 .field-help {
   display: block;
+  max-width: 100%;
   margin-top: 0.4rem;
   color: #6b655d;
   font-size: 0.86rem;
+  overflow-wrap: anywhere;
 }
 
 .field-help--rule {
@@ -210,8 +279,9 @@
 
 .preview-controls {
   display: none;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.75rem;
+  width: 100%;
   margin-top: 0.75rem;
 }
 
@@ -219,9 +289,14 @@
   display: grid;
 }
 
+.preview-control {
+  min-width: 0;
+}
+
 .preview-control label {
   display: flex;
   justify-content: space-between;
+  gap: 0.5rem;
   margin-bottom: 0.35rem;
   font-size: 0.8rem;
   font-weight: 700;
@@ -229,14 +304,17 @@
 
 .preview-control input {
   width: 100%;
+  max-width: 100%;
 }
 
 .proof-panel {
+  max-width: 100%;
   padding: 1rem;
   margin: 1.4rem 0;
   border: 1px solid #d9c7a5;
   border-radius: 16px;
   background: #faf6ec;
+  overflow-wrap: anywhere;
 }
 
 .proof-panel strong {
@@ -246,7 +324,7 @@
 
 .proof-check {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 0.7rem;
   align-items: start;
 }
@@ -256,18 +334,22 @@
 }
 
 .proof-check label {
+  min-width: 0;
   font-weight: 500;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .qty-row {
   display: grid;
-  grid-template-columns: 90px 1fr;
+  grid-template-columns: 90px minmax(0, 1fr);
   gap: 0.75rem;
+  width: 100%;
 }
 
 .qty-row input {
   width: 100%;
+  min-width: 0;
   padding: 0.75rem;
   border: 1px solid #d7d0c6;
   border-radius: 12px;
@@ -276,13 +358,20 @@
 
 .qty-row .button {
   width: 100%;
+  min-width: 0;
+  white-space: normal;
 }
 
 .micro-trust {
   display: grid;
   gap: 0.55rem;
+  max-width: 100%;
   margin-top: 1.25rem;
   font-size: 0.9rem;
+}
+
+.micro-trust div {
+  overflow-wrap: anywhere;
 }
 
 .micro-trust div::before {
@@ -293,11 +382,13 @@
 
 .product-form-error {
   display: none;
+  max-width: 100%;
   padding: 0.75rem;
   margin-bottom: 1rem;
   border-radius: 10px;
   background: #fff2f2;
   color: #9b2c2c;
+  overflow-wrap: anywhere;
 }
 
 .product-form-error.is-visible {
@@ -308,6 +399,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem 1.25rem;
+  width: 100%;
   padding-top: 1.25rem;
   margin-top: 1.25rem;
   border-top: 1px solid #e4ded5;
@@ -315,14 +407,25 @@
 }
 
 .product-related-links a {
+  max-width: 100%;
   text-underline-offset: 0.2em;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 900px) {
   .product-page {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
+    width: 100%;
+    max-width: 100vw;
     padding-top: 1rem;
+    overflow-x: hidden;
+  }
+
+  .product-gallery,
+  .product-form-wrap {
+    width: 100%;
+    max-width: 100%;
   }
 
   .product-form-wrap {
@@ -348,8 +451,38 @@
 }
 
 @media (max-width: 520px) {
+  .product-page {
+    gap: 1rem;
+  }
+
+  .product-form-wrap {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  .choice-row {
+    gap: 0.5rem;
+  }
+
+  .choice label {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
   .preview-controls {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .qty-row {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .product-preview__badge {
+    left: 0.65rem;
+    bottom: 0.65rem;
+    max-width: calc(100% - 1.3rem);
+    padding: 0.45rem 0.6rem;
   }
 }
 
