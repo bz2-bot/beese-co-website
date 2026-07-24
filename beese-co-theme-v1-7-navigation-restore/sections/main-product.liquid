@@ -108,11 +108,12 @@
 
       <div class="field">
         <label for="Artwork">Upload your logo or artwork</label>
-        <input id="Artwork" type="file" name="properties[Artwork Upload]" accept=".png,.jpg,.jpeg,.pdf,.svg" data-artwork-upload>
-        <small class="field-help">Transparent PNG files create the best instant preview. Your original file is attached to the order.</small>
+        <input id="Artwork" type="file" name="properties[Artwork Upload]" accept=".png,.jpg,.jpeg,.pdf,.svg" data-artwork-upload aria-describedby="ArtworkHelp ArtworkStatus">
+        <small class="field-help" id="ArtworkHelp">Transparent PNG files create the best instant preview. Your original file is attached to the order.</small>
+        <small class="field-help" id="ArtworkStatus" data-artwork-status aria-live="polite"></small>
         <div class="preview-controls" data-preview-controls>
           <div class="preview-control">
-            <label for="ArtworkSize"><span>Preview size</span><span data-size-value>30%</span></label>
+            <label for="ArtworkSize"><span>Preview size</span><span data-size-value>64%</span></label>
             <input id="ArtworkSize" type="range" min="20" max="92" value="64" data-preview-size>
           </div>
           <div class="preview-control">
@@ -156,7 +157,7 @@
 
       <div class="product-form-error" data-product-error role="alert"></div>
       <div class="qty-row">
-        <input type="number" name="quantity" min="1" value="1" aria-label="Quantity">
+        <input type="number" name="quantity" min="1" step="1" value="1" aria-label="Quantity">
         <button class="button" type="submit" data-add-button {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
           <span data-add-label>{% if product.selected_or_first_available_variant.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
         </button>
