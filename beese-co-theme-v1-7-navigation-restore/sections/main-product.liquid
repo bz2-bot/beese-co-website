@@ -108,7 +108,7 @@
 
       <div class="field">
         <label for="Artwork">Upload your logo or artwork</label>
-        <input id="Artwork" type="file" name="properties[Artwork Upload]" accept=".png,.jpg,.jpeg,.pdf,.svg" data-artwork-upload aria-describedby="ArtworkHelp ArtworkStatus">
+        <input id="Artwork" type="file" name="properties[Artwork Upload]" accept=".png,.jpg,.jpeg,.pdf,.svg" data-artwork-upload aria-describedby="ArtworkHelp ArtworkStatus DesignRequirement">
         <small class="field-help" id="ArtworkHelp">Transparent PNG files create the best instant preview. Your original file is attached to the order.</small>
         <small class="field-help" id="ArtworkStatus" data-artwork-status aria-live="polite"></small>
         <div class="preview-controls" data-preview-controls>
@@ -125,12 +125,13 @@
 
       <div class="field">
         <label for="Personalization">Name, monogram or additional text</label>
-        <input id="Personalization" type="text" name="properties[Personalization]" placeholder="Leave blank if you only want your uploaded artwork">
+        <input id="Personalization" type="text" name="properties[Personalization]" maxlength="120" data-personalization placeholder="Leave blank if you only want your uploaded artwork" aria-describedby="DesignRequirement">
+        <small class="field-help" id="DesignRequirement">Provide an artwork file, personalization text, or both so we know what to create.</small>
       </div>
 
       <div class="field">
         <label for="Instructions">Special instructions</label>
-        <textarea id="Instructions" name="properties[Special Instructions]" placeholder="Tell us anything we should know about placement, colors or your design."></textarea>
+        <textarea id="Instructions" name="properties[Special Instructions]" maxlength="1000" placeholder="Tell us anything we should know about placement, colors or your design."></textarea>
       </div>
 
       <div class="field">
@@ -184,6 +185,31 @@
   <script type="application/json" data-product-json>{{ product | json }}</script>
   {{ product | structured_data }}
 </section>
+
+<script>
+  (() => {
+    const root = document.currentScript.previousElementSibling;
+    const form = root?.querySelector('[data-product-form]');
+    if (!form) return;
+
+    form.addEventListener('submit', (event) => {
+      const artwork = form.querySelector('[data-artwork-upload]');
+      const personalization = form.querySelector('[data-personalization]');
+      const error = form.querySelector('[data-product-error]');
+      const hasArtwork = Boolean(artwork?.files?.length);
+      const hasPersonalization = Boolean(personalization?.value.trim());
+
+      if (hasArtwork || hasPersonalization) return;
+
+      event.preventDefault();
+      if (error) {
+        error.textContent = 'Upload artwork or enter the name, monogram or text you want us to create.';
+        error.classList.add('is-visible');
+      }
+      personalization?.focus();
+    });
+  })();
+</script>
 
 {% schema %}
 {
