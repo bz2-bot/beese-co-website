@@ -100,6 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const positionProperty = form.querySelector('[data-preview-position-property]');
     const decorationProperty = form.querySelector('[data-preview-decoration]');
     const decorationHelp = form.querySelector('[data-decoration-help]');
+    const decorationRule = form.querySelector('[data-decoration-rule]');
+    const laserDecoration = form.querySelector('[data-decoration-laser]');
+    const fullColorDecoration = form.querySelector('[data-decoration-full-color]');
     const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', { style: 'currency', currency: window.Shopify?.currency?.active || 'USD' }).format(cents / 100);
     const normalize = (value = '') => value
       .toLowerCase()
@@ -161,8 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
       window.history.replaceState({}, '', url);
       selectVariantImage(variant);
     };
-    form.querySelectorAll('[data-option-position] input').forEach((input) => input.addEventListener('change', updateVariant));
-    updateVariant();
 
     const applyDecorationPreview = () => {
       const selected = form.querySelector('[data-decoration-choice] input:checked');
@@ -179,8 +180,25 @@ document.addEventListener('DOMContentLoaded', () => {
       if (match) match.click();
     };
 
+    const enforceDecorationRules = () => {
+      const coverageField = [...form.querySelectorAll('[data-option-position]')]
+        .find((field) => ['customization area', 'coverage', 'decoration area'].includes(normalize(field.dataset.optionName)));
+      const coverage = normalize(coverageField?.querySelector('input:checked')?.value);
+      const isFullWrap = coverage.includes('full wrap');
+
+      if (fullColorDecoration) fullColorDecoration.disabled = isFullWrap;
+      if (isFullWrap && fullColorDecoration?.checked && laserDecoration) laserDecoration.checked = true;
+      if (decorationRule) decorationRule.hidden = !isFullWrap;
+      applyDecorationPreview();
+    };
+
+    form.querySelectorAll('[data-option-position] input').forEach((input) => input.addEventListener('change', () => {
+      updateVariant();
+      enforceDecorationRules();
+    }));
     form.querySelector('[data-decoration-choice]')?.addEventListener('change', applyDecorationPreview);
-    applyDecorationPreview();
+    updateVariant();
+    enforceDecorationRules();
 
     artworkInput?.addEventListener('change', () => {
       setError();

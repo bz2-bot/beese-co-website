@@ -10,7 +10,22 @@ The 22 oz product is the reusable baseline for Beese & Co. tumbler product pages
 
 ## Shopify product setup
 
-Create one Shopify product for the 22 oz tumbler and add a `Color` option with these values. Upload the matching source image as product media, use the listed descriptive alt text, and assign that media item to the matching variant.
+Create one draft Shopify product for the 22 oz tumbler with two options:
+
+1. `Color` — the 23 values listed below.
+2. `Customization Area` — `Single-Sided`, `Double-Sided`, and `Full Wrap`.
+
+This creates 69 made-to-order variants. Do not track inventory. Set every color's price by `Customization Area`:
+
+| Customization Area | Price |
+| --- | ---: |
+| Single-Sided | $28.00 |
+| Double-Sided | $32.00 |
+| Full Wrap | $45.00 |
+
+`Single-Sided` and `Double-Sided` may use Laser Engraved or Full Color. `Full Wrap` is Laser Engraved only. The storefront automatically selects Laser Engraved, disables Full Color, and explains the rule whenever Full Wrap is selected.
+
+Upload each matching source image as product media, use the listed descriptive alt text, and assign that media item to all three matching color variants.
 
 | Shopify color value | Repository source image | Product media alt text |
 | --- | --- | --- |
@@ -58,6 +73,7 @@ The preview boundary is an overflow-hidden container. Uploaded artwork is positi
 The product form sends:
 
 - Decoration Method
+- Color and Customization Area as Shopify variant selections
 - Artwork Upload
 - Personalization
 - Special Instructions
@@ -91,5 +107,8 @@ After the real Shopify product and media are assigned:
 6. Verify missing and malformed mobile numbers are blocked.
 7. Verify taped-proof acknowledgment is required.
 8. Add each decoration path to cart and inspect all line-item properties.
-9. Confirm quantity and checkout handoff.
-10. Repeat on mobile, tablet, desktop, keyboard-only navigation, and reduced-motion mode.
+9. Verify Single-Sided is $28 and permits Laser Engraved or Full Color.
+10. Verify Double-Sided is $32 and permits Laser Engraved or Full Color.
+11. Verify Full Wrap is $45, automatically selects Laser Engraved, and disables Full Color.
+12. Confirm quantity and checkout handoff.
+13. Repeat on mobile, tablet, desktop, keyboard-only navigation, and reduced-motion mode.

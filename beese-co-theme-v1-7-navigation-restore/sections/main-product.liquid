@@ -91,17 +91,18 @@
           <legend>How would you like it personalized?</legend>
           <div class="choice-row">
             <div class="choice">
-              <input type="radio" id="dec-laser" name="properties[Decoration Method]" value="Laser Engraved" required checked>
+              <input type="radio" id="dec-laser" name="properties[Decoration Method]" value="Laser Engraved" required checked data-decoration-laser>
               <label for="dec-laser">Laser Engraved</label>
             </div>
             {% unless section.settings.laser_only %}
               <div class="choice">
-                <input type="radio" id="dec-full" name="properties[Decoration Method]" value="Full Color UV">
+                <input type="radio" id="dec-full" name="properties[Decoration Method]" value="Full Color UV" data-decoration-full-color>
                 <label for="dec-full">Full Color</label>
               </div>
             {% endunless %}
           </div>
           <small class="field-help" data-decoration-help>Laser engraving previews your uploaded artwork in engraved gray.</small>
+          <small class="field-help field-help--rule" data-decoration-rule aria-live="polite" hidden>Full wrap is available with laser engraving only.</small>
         </fieldset>
       {% endif %}
 
