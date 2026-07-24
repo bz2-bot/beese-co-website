@@ -59,20 +59,6 @@
         <li><a href="{{ section.settings.about_link | default: routes.root_url }}">About</a></li>
         <li><a href="{{ section.settings.contact_link | default: routes.root_url }}">Contact</a></li>
       </ul>
-              {% endif %}
-            </li>
-          {% endfor %}
-        {% else %}
-          <li><a href="{{ routes.root_url }}">Home</a></li>
-          <li><a href="{{ section.settings.tumblers_link | default: routes.root_url }}">Tumblers</a></li>
-          <li><a href="{{ section.settings.ornaments_link | default: routes.root_url }}">Ornaments</a></li>
-          <li><a href="{{ section.settings.custom_link | default: routes.root_url }}">Custom Orders</a></li>
-          <li><a href="{{ section.settings.bulk_link | default: routes.root_url }}">Bulk Orders</a></li>
-          <li><a href="{{ section.settings.golf_link | default: routes.root_url }}">Golf Balls &amp; More</a></li>
-          <li><a href="{{ section.settings.about_link | default: routes.root_url }}">About</a></li>
-          <li><a href="{{ section.settings.contact_link | default: routes.root_url }}">Contact</a></li>
-        {% endif %}
-      </ul>
     </div>
   </div>
 </header>
