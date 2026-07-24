@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const label = form.querySelector('[data-add-label]');
     const error = form.querySelector('[data-product-error]');
     const artworkInput = form.querySelector('[data-artwork-upload]');
+    const artworkStatus = form.querySelector('[data-artwork-status]');
     const artworkPreview = root.querySelector('[data-artwork-preview]');
     const previewControls = form.querySelector('[data-preview-controls]');
     const sizeControl = form.querySelector('[data-preview-size]');
@@ -114,6 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
       error.textContent = message;
       error.classList.toggle('is-visible', Boolean(message));
     };
+
+    const getCoverageField = () => [...form.querySelectorAll('[data-option-position]')]
+      .find((field) => ['customization area', 'coverage', 'decoration area'].includes(normalize(field.dataset.optionName)));
+
+    const getCoverage = () => normalize(getCoverageField()?.querySelector('input:checked')?.value);
 
     const selectVariantImage = (variant) => {
       const gallery = root.querySelector('[data-product-gallery]');
@@ -174,17 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (decorationHelp) decorationHelp.textContent = isEngraved
         ? 'Laser engraving previews your uploaded artwork in engraved gray.'
         : 'Full color keeps the original colors from your uploaded artwork.';
-
-      const gallery = root.querySelector('[data-product-gallery]');
-      const match = [...(gallery?.querySelectorAll('[data-thumb]') || [])].find((thumb) => (thumb.dataset.tags || '').toLowerCase().includes(isEngraved ? 'laser' : 'full color'));
-      if (match) match.click();
     };
 
     const enforceDecorationRules = () => {
-      const coverageField = [...form.querySelectorAll('[data-option-position]')]
-        .find((field) => ['customization area', 'coverage', 'decoration area'].includes(normalize(field.dataset.optionName)));
-      const coverage = normalize(coverageField?.querySelector('input:checked')?.value);
-      const isFullWrap = coverage.includes('full wrap');
+      const isFullWrap = getCoverage().includes('full wrap');
 
       if (fullColorDecoration) fullColorDecoration.disabled = isFullWrap;
       if (isFullWrap && fullColorDecoration?.checked && laserDecoration) laserDecoration.checked = true;
@@ -192,13 +191,33 @@ document.addEventListener('DOMContentLoaded', () => {
       applyDecorationPreview();
     };
 
+    const syncPreviewControls = () => {
+      if (sizeControl) {
+        const value = `${sizeControl.value}%`;
+        if (artworkPreview) artworkPreview.style.width = value;
+        if (sizeValue) sizeValue.textContent = value;
+        if (sizeProperty) sizeProperty.value = value;
+      }
+      if (positionControl) {
+        const value = `${positionControl.value}%`;
+        if (artworkPreview) artworkPreview.style.top = value;
+        if (positionValue) positionValue.textContent = value;
+        if (positionProperty) positionProperty.value = value;
+      }
+    };
+
     form.querySelectorAll('[data-option-position] input').forEach((input) => input.addEventListener('change', () => {
+      setError();
       updateVariant();
       enforceDecorationRules();
     }));
-    form.querySelector('[data-decoration-choice]')?.addEventListener('change', applyDecorationPreview);
+    form.querySelector('[data-decoration-choice]')?.addEventListener('change', () => {
+      setError();
+      applyDecorationPreview();
+    });
     updateVariant();
     enforceDecorationRules();
+    syncPreviewControls();
 
     artworkInput?.addEventListener('change', () => {
       setError();
@@ -206,8 +225,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!file) {
         artworkPreview?.classList.remove('is-visible');
         previewControls?.classList.remove('is-visible');
+        if (artworkStatus) artworkStatus.textContent = '';
         return;
       }
+      if (artworkStatus) artworkStatus.textContent = `${file.name} selected.`;
       const previewable = ['image/png', 'image/jpeg', 'image/svg+xml'].includes(file.type);
       if (!previewable) {
         artworkPreview?.classList.remove('is-visible');
@@ -226,24 +247,36 @@ document.addEventListener('DOMContentLoaded', () => {
       reader.readAsDataURL(file);
     });
 
-    sizeControl?.addEventListener('input', () => {
-      const value = `${sizeControl.value}%`;
-      if (artworkPreview) artworkPreview.style.width = value;
-      if (sizeValue) sizeValue.textContent = value;
-      if (sizeProperty) sizeProperty.value = value;
-    });
-
-    positionControl?.addEventListener('input', () => {
-      const value = `${positionControl.value}%`;
-      if (artworkPreview) artworkPreview.style.top = value;
-      if (positionValue) positionValue.textContent = value;
-      if (positionProperty) positionProperty.value = value;
-    });
+    sizeControl?.addEventListener('input', syncPreviewControls);
+    positionControl?.addEventListener('input', syncPreviewControls);
 
     form.addEventListener('submit', (event) => {
       setError();
       const phone = form.querySelector('#Phone');
       const proof = form.querySelector('#Proof');
+      const quantity = form.querySelector('input[name="quantity"]');
+      const selectedDecoration = form.querySelector('[data-decoration-choice] input:checked')?.value || '';
+      const invalidFullWrapCombination = getCoverage().includes('full wrap') && selectedDecoration.toLowerCase().includes('full color');
+
+      if (!idInput?.value) {
+        event.preventDefault();
+        setError('Choose an available color and customization area before adding this tumbler to your cart.');
+        return;
+      }
+      if (invalidFullWrapCombination) {
+        event.preventDefault();
+        if (laserDecoration) laserDecoration.checked = true;
+        enforceDecorationRules();
+        setError('Full wrap is available with laser engraving only. Please review the decoration method and try again.');
+        laserDecoration?.focus();
+        return;
+      }
+      if (!quantity || !Number.isInteger(Number(quantity.value)) || Number(quantity.value) < 1) {
+        event.preventDefault();
+        setError('Enter a whole-number quantity of at least 1.');
+        quantity?.focus();
+        return;
+      }
       if (!phone?.value.trim()) {
         event.preventDefault();
         setError('Enter the mobile number where you want to receive your taped proof.');
