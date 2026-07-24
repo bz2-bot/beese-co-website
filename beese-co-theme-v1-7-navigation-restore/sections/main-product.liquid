@@ -37,26 +37,8 @@
       <div class="product-thumbs" aria-label="Product images">
         {% for image in product.images %}
           {% assign image_alt = image.alt | default: product.title %}
-          <button
-            class="product-thumb"
-            type="button"
-            data-thumb
-            data-image-id="{{ image.id }}"
-            data-src="{{ image | image_url: width: 1800 }}"
-            data-alt="{{ image.alt | default: product.title | escape }}"
-            data-tags="{{ image.alt | escape }}"
-            aria-label="Show {{ image_alt | escape }}"
-            {% if forloop.first %}aria-current="true"{% endif %}
-          >
-            {{
-              image
-              | image_url: width: 260
-              | image_tag:
-                loading: 'lazy',
-                widths: '130, 195, 260',
-                sizes: '84px',
-                alt: image_alt
-            }}
+          <button class="product-thumb" type="button" data-thumb data-image-id="{{ image.id }}" data-src="{{ image | image_url: width: 1800 }}" data-alt="{{ image.alt | default: product.title | escape }}" data-tags="{{ image.alt | escape }}" aria-label="Show {{ image_alt | escape }}" {% if forloop.first %}aria-current="true"{% endif %}>
+            {{ image | image_url: width: 260 | image_tag: loading: 'lazy', widths: '130, 195, 260', sizes: '84px', alt: image_alt }}
           </button>
         {% endfor %}
       </div>
@@ -90,16 +72,8 @@
         <fieldset class="field" data-decoration-choice>
           <legend>How would you like it personalized?</legend>
           <div class="choice-row">
-            <div class="choice">
-              <input type="radio" id="dec-laser" name="properties[Decoration Method]" value="Laser Engraved" required checked data-decoration-laser>
-              <label for="dec-laser">Laser Engraved</label>
-            </div>
-            {% unless section.settings.laser_only %}
-              <div class="choice">
-                <input type="radio" id="dec-full" name="properties[Decoration Method]" value="Full Color UV" data-decoration-full-color>
-                <label for="dec-full">Full Color</label>
-              </div>
-            {% endunless %}
+            <div class="choice"><input type="radio" id="dec-laser" name="properties[Decoration Method]" value="Laser Engraved" required checked data-decoration-laser><label for="dec-laser">Laser Engraved</label></div>
+            {% unless section.settings.laser_only %}<div class="choice"><input type="radio" id="dec-full" name="properties[Decoration Method]" value="Full Color UV" data-decoration-full-color><label for="dec-full">Full Color</label></div>{% endunless %}
           </div>
           <small class="field-help" data-decoration-help>Laser engraving previews your uploaded artwork in engraved gray.</small>
           <small class="field-help field-help--rule" data-decoration-rule aria-live="polite" hidden>Full wrap is available with laser engraving only.</small>
@@ -112,43 +86,17 @@
         <small class="field-help" id="ArtworkHelp">Transparent PNG files create the best instant preview. Your original file is attached to the order.</small>
         <small class="field-help" id="ArtworkStatus" data-artwork-status aria-live="polite"></small>
         <div class="preview-controls" data-preview-controls>
-          <div class="preview-control">
-            <label for="ArtworkSize"><span>Preview size</span><span data-size-value>64%</span></label>
-            <input id="ArtworkSize" type="range" min="20" max="92" value="64" data-preview-size>
-          </div>
-          <div class="preview-control">
-            <label for="ArtworkPosition"><span>Vertical position</span><span data-position-value>50%</span></label>
-            <input id="ArtworkPosition" type="range" min="15" max="85" value="50" data-preview-position>
-          </div>
+          <div class="preview-control"><label for="ArtworkSize"><span>Preview size</span><span data-size-value>64%</span></label><input id="ArtworkSize" type="range" min="20" max="92" value="64" data-preview-size></div>
+          <div class="preview-control"><label for="ArtworkPosition"><span>Vertical position</span><span data-position-value>50%</span></label><input id="ArtworkPosition" type="range" min="15" max="85" value="50" data-preview-position></div>
         </div>
       </div>
 
-      <div class="field">
-        <label for="Personalization">Name, monogram or additional text</label>
-        <input id="Personalization" type="text" name="properties[Personalization]" maxlength="120" data-personalization placeholder="Leave blank if you only want your uploaded artwork" aria-describedby="DesignRequirement">
-        <small class="field-help" id="DesignRequirement">Provide an artwork file, personalization text, or both so we know what to create.</small>
-      </div>
+      <div class="field"><label for="Personalization">Name, monogram or additional text</label><input id="Personalization" type="text" name="properties[Personalization]" maxlength="120" data-personalization placeholder="Leave blank if you only want your uploaded artwork" aria-describedby="DesignRequirement"><small class="field-help" id="DesignRequirement">Provide an artwork file, personalization text, or both so we know what to create.</small></div>
+      <div class="field"><label for="Instructions">Special instructions</label><textarea id="Instructions" name="properties[Special Instructions]" maxlength="1000" placeholder="Tell us anything we should know about placement, colors or your design."></textarea></div>
+      <div class="field"><label for="Phone">Mobile number for your taped proof</label><input id="Phone" type="tel" name="properties[Mobile Number for Taped Proof]" autocomplete="tel" inputmode="tel" minlength="10" required placeholder="Please make sure this number is correct"><small class="field-help">We use this number only to text your taped proof and communicate about this order.</small></div>
 
-      <div class="field">
-        <label for="Instructions">Special instructions</label>
-        <textarea id="Instructions" name="properties[Special Instructions]" maxlength="1000" placeholder="Tell us anything we should know about placement, colors or your design."></textarea>
-      </div>
-
-      <div class="field">
-        <label for="Phone">Mobile number for your taped proof</label>
-        <input id="Phone" type="tel" name="properties[Mobile Number for Taped Proof]" autocomplete="tel" inputmode="tel" minlength="10" required placeholder="Please make sure this number is correct">
-        <small class="field-help">We use this number only to text your taped proof and communicate about this order.</small>
-      </div>
-
-      <div class="proof-panel">
-        <strong>Complimentary taped proof by text</strong>
-        <span>Your instant preview is for visualization only. Before production begins, we will text you a photo of a taped proof showing the final size and placement on the actual product.</span>
-      </div>
-
-      <div class="field proof-check">
-        <input id="Proof" type="checkbox" name="properties[Taped Proof Agreement]" value="Agreed" required>
-        <label for="Proof">I understand I will receive a text with a photo of my taped proof for approval before production begins. My order will not go into production until I approve it.</label>
-      </div>
+      <div class="proof-panel"><strong>Complimentary taped proof by text</strong><span>Your instant preview is for visualization only. Before production begins, we will text you a photo of a taped proof showing the final size and placement on the actual product.</span></div>
+      <div class="field proof-check"><input id="Proof" type="checkbox" name="properties[Taped Proof Agreement]" value="Agreed" required><label for="Proof">I understand I will receive a text with a photo of my taped proof for approval before production begins. My order will not go into production until I approve it.</label></div>
 
       <input type="hidden" name="properties[Instant Preview Decoration]" value="Laser Engraved" data-preview-decoration>
       <input type="hidden" name="properties[Instant Preview Profile]" value="{{ section.settings.preview_profile }}" data-preview-profile-property>
@@ -157,33 +105,14 @@
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
 
       <div class="product-form-error" data-product-error role="alert"></div>
-      <div class="qty-row">
-        <input type="number" name="quantity" min="1" step="1" value="1" aria-label="Quantity">
-        <button class="button" type="submit" data-add-button {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-          <span data-add-label>{% if product.selected_or_first_available_variant.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
-        </button>
-      </div>
+      <div class="qty-row"><input type="number" name="quantity" min="1" step="1" value="1" aria-label="Quantity"><button class="button" type="submit" data-add-button {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}><span data-add-label>{% if product.selected_or_first_available_variant.available %}Add to Cart{% else %}Sold Out{% endif %}</span></button></div>
     {% endform %}
 
-    <div class="micro-trust">
-      <div>Complimentary taped proof by text</div>
-      <div>Production begins only after your approval</div>
-      <div>Personalized in Illinois</div>
-      <div>Pickup or shipping available</div>
-    </div>
-
-    <nav class="product-related-links" aria-label="Related shopping links">
-      {% if collection %}
-        <a href="{{ collection.url }}">Shop more {{ collection.title }}</a>
-      {% else %}
-        <a href="{{ routes.all_products_collection_url }}">Shop all tumblers</a>
-      {% endif %}
-      <a href="{{ routes.root_url }}pages/contact">Questions? Contact Dana</a>
-    </nav>
+    <div class="micro-trust"><div>Complimentary taped proof by text</div><div>Production begins only after your approval</div><div>Personalized in Illinois</div><div>Pickup or shipping available</div></div>
+    <nav class="product-related-links" aria-label="Related shopping links">{% if collection %}<a href="{{ collection.url }}">Shop more {{ collection.title }}</a>{% else %}<a href="{{ routes.root_url }}collections/tumblers">Shop all tumblers</a>{% endif %}<a href="{{ routes.root_url }}pages/contact">Questions? Contact Dana</a></nav>
   </div>
 
   <script type="application/json" data-product-json>{{ product | json }}</script>
-  {{ product | structured_data }}
 </section>
 
 <script>
@@ -191,38 +120,18 @@
     const root = document.currentScript.previousElementSibling;
     const form = root?.querySelector('[data-product-form]');
     if (!form) return;
-
     form.addEventListener('submit', (event) => {
       const artwork = form.querySelector('[data-artwork-upload]');
       const personalization = form.querySelector('[data-personalization]');
       const error = form.querySelector('[data-product-error]');
-      const hasArtwork = Boolean(artwork?.files?.length);
-      const hasPersonalization = Boolean(personalization?.value.trim());
-
-      if (hasArtwork || hasPersonalization) return;
-
+      if (artwork?.files?.length || personalization?.value.trim()) return;
       event.preventDefault();
-      if (error) {
-        error.textContent = 'Upload artwork or enter the name, monogram or text you want us to create.';
-        error.classList.add('is-visible');
-      }
+      if (error) { error.textContent = 'Upload artwork or enter the name, monogram or text you want us to create.'; error.classList.add('is-visible'); }
       personalization?.focus();
     });
   })();
 </script>
 
 {% schema %}
-{
-  "name":"Main product",
-  "settings":[
-    {"type":"checkbox","id":"show_decoration","label":"Show decoration method","default":true},
-    {"type":"checkbox","id":"laser_only","label":"Laser only (use for handled tumblers)","default":false},
-    {"type":"header","content":"Instant preview boundary"},
-    {"type":"text","id":"preview_profile","label":"Preview profile name","default":"22 oz master"},
-    {"type":"range","id":"preview_left","label":"Boundary left position","min":0,"max":70,"step":1,"unit":"%","default":34},
-    {"type":"range","id":"preview_top","label":"Boundary top position","min":0,"max":70,"step":1,"unit":"%","default":16},
-    {"type":"range","id":"preview_width","label":"Boundary width","min":10,"max":70,"step":1,"unit":"%","default":32},
-    {"type":"range","id":"preview_height","label":"Boundary height","min":10,"max":80,"step":1,"unit":"%","default":65}
-  ]
-}
+{"name":"Main product","settings":[{"type":"checkbox","id":"show_decoration","label":"Show decoration method","default":true},{"type":"checkbox","id":"laser_only","label":"Laser only (use for handled tumblers)","default":false},{"type":"header","content":"Instant preview boundary"},{"type":"text","id":"preview_profile","label":"Preview profile name","default":"22 oz master"},{"type":"range","id":"preview_left","label":"Boundary left position","min":0,"max":70,"step":1,"unit":"%","default":34},{"type":"range","id":"preview_top","label":"Boundary top position","min":0,"max":70,"step":1,"unit":"%","default":16},{"type":"range","id":"preview_width","label":"Boundary width","min":10,"max":70,"step":1,"unit":"%","default":32},{"type":"range","id":"preview_height","label":"Boundary height","min":10,"max":80,"step":1,"unit":"%","default":65}]}
 {% endschema %}
