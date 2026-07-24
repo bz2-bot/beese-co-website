@@ -1,17 +1,18 @@
-<section class="section section--categories">
+<section class="section section--categories" aria-labelledby="CategoryHeading-{{ section.id }}">
   <div class="page-width">
     <div class="section-title">
-      <h2 class="heading heading-md">{{ section.settings.heading }}</h2>
+      <h2 class="heading heading-md" id="CategoryHeading-{{ section.id }}">{{ section.settings.heading }}</h2>
     </div>
 
     <div class="category-feature-grid">
       {% for block in section.blocks %}
-        <a class="category-feature-card" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+        {% assign category_link = block.settings.link | default: routes.all_products_collection_url %}
+        <a class="category-feature-card" href="{{ category_link }}" {{ block.shopify_attributes }}>
           <div class="category-feature-card__media">
             {% if block.settings.image != blank %}
-              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 25vw, (min-width: 620px) 50vw, 100vw' }}
+              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360,540,720,900', sizes: '(min-width: 990px) 25vw, (min-width: 620px) 50vw, 100vw', alt: block.settings.image.alt | default: block.settings.title }}
             {% else %}
-              <img src="{{ 'placeholder-category.svg' | asset_url }}" class="theme-placeholder-image" alt="Replace {{ block.settings.title | escape }} category photo" loading="lazy">
+              <img src="{{ 'placeholder-category.svg' | asset_url }}" class="theme-placeholder-image" alt="{{ block.settings.title | escape }} category image placeholder" loading="lazy">
             {% endif %}
           </div>
           <div class="category-feature-card__copy">

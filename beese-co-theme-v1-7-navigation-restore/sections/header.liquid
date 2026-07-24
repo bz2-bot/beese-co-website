@@ -35,44 +35,46 @@
     </a>
   {% endif %}
 
-  <nav class="category-nav" aria-label="Shop categories">
+  <nav class="category-nav" aria-label="Primary shopping navigation">
     <div class="page-width category-nav__scroller">
-      <a class="category-nav__item{% if request.path contains '/collections/tumblers' or template.suffix == 'tumblers' %} is-active{% endif %}" href="{{ section.settings.tumblers_link | default: routes.root_url }}">Tumblers</a>
-      <a class="category-nav__item{% if request.path contains '/collections/ornaments' or template.suffix == 'ornaments' %} is-active{% endif %}" href="{{ section.settings.ornaments_link | default: routes.root_url }}">Ornaments</a>
-      <a class="category-nav__item" href="{{ section.settings.golf_link | default: routes.root_url }}">Golf Balls &amp; More</a>
-      <a class="category-nav__item" href="{{ section.settings.custom_link | default: routes.root_url }}">Custom Orders</a>
-      <a class="category-nav__item" href="{{ section.settings.bulk_link | default: routes.root_url }}">Bulk Orders</a>
-      <a class="category-nav__item" href="{{ section.settings.about_link | default: routes.root_url }}">About</a>
-      <a class="category-nav__item" href="{{ section.settings.contact_link | default: routes.root_url }}">Contact</a>
+      <a class="category-nav__item{% if request.path contains '/collections/tumblers' or template.suffix == 'tumblers' %} is-active{% endif %}" href="{{ section.settings.tumblers_link | default: routes.all_products_collection_url }}">Tumblers</a>
+      <a class="category-nav__item{% if request.path contains '/collections/ornaments' or template.suffix == 'ornaments' %} is-active{% endif %}" href="{{ section.settings.ornaments_link | default: routes.all_products_collection_url }}">Ornaments</a>
+      <a class="category-nav__item{% if request.path contains '/collections/golf' or template.suffix == 'golf' %} is-active{% endif %}" href="{{ section.settings.golf_link | default: routes.all_products_collection_url }}">Golf Balls &amp; More</a>
+      <a class="category-nav__item{% if request.path contains '/pages/custom' %} is-active{% endif %}" href="{{ section.settings.custom_link | default: routes.all_products_collection_url }}">Custom Orders</a>
+      <a class="category-nav__item{% if request.path contains '/pages/bulk' %} is-active{% endif %}" href="{{ section.settings.bulk_link | default: routes.all_products_collection_url }}">Bulk Orders</a>
+      <a class="category-nav__item{% if request.path contains '/pages/about' %} is-active{% endif %}" href="{{ section.settings.about_link | default: routes.root_url }}">About</a>
+      <a class="category-nav__item{% if request.path contains '/pages/contact' %} is-active{% endif %}" href="{{ section.settings.contact_link | default: routes.root_url }}">Contact</a>
     </div>
   </nav>
 
-  <div class="mobile-menu" id="MobileMenu" data-mobile-menu>
-    <div class="page-width mobile-menu__inner">
-      <div class="mobile-menu__heading">Menu</div>
-      <ul class="mobile-menu__list">
-        <li><a href="{{ section.settings.tumblers_link | default: routes.root_url }}">Tumblers</a></li>
-        <li><a href="{{ section.settings.ornaments_link | default: routes.root_url }}">Ornaments</a></li>
-        <li><a href="{{ section.settings.golf_link | default: routes.root_url }}">Golf Balls &amp; More</a></li>
-        <li><a href="{{ section.settings.custom_link | default: routes.root_url }}">Custom Orders</a></li>
-        <li><a href="{{ section.settings.bulk_link | default: routes.root_url }}">Bulk Orders</a></li>
-        <li><a href="{{ section.settings.about_link | default: routes.root_url }}">About</a></li>
-        <li><a href="{{ section.settings.contact_link | default: routes.root_url }}">Contact</a></li>
-      </ul>
-              {% endif %}
-            </li>
-          {% endfor %}
-        {% else %}
-          <li><a href="{{ routes.root_url }}">Home</a></li>
-          <li><a href="{{ section.settings.tumblers_link | default: routes.root_url }}">Tumblers</a></li>
-          <li><a href="{{ section.settings.ornaments_link | default: routes.root_url }}">Ornaments</a></li>
-          <li><a href="{{ section.settings.custom_link | default: routes.root_url }}">Custom Orders</a></li>
-          <li><a href="{{ section.settings.bulk_link | default: routes.root_url }}">Bulk Orders</a></li>
-          <li><a href="{{ section.settings.golf_link | default: routes.root_url }}">Golf Balls &amp; More</a></li>
+  <div class="mobile-menu" id="MobileMenu" data-mobile-menu aria-hidden="true" tabindex="-1">
+    <button class="mobile-menu__backdrop" type="button" aria-label="Close menu" data-mobile-close tabindex="-1"></button>
+    <div class="mobile-menu__panel" role="dialog" aria-modal="true" aria-labelledby="MobileMenuHeading">
+      <div class="mobile-menu__toolbar">
+        <h2 class="mobile-menu__heading" id="MobileMenuHeading">Shop Beese &amp; Co.</h2>
+        <button class="mobile-menu__close" type="button" aria-label="Close menu" data-mobile-close>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"></path></svg>
+        </button>
+      </div>
+
+      <nav aria-label="Mobile navigation">
+        <p class="mobile-menu__label">Shop</p>
+        <ul class="mobile-menu__list mobile-menu__list--primary">
+          <li><a href="{{ section.settings.tumblers_link | default: routes.all_products_collection_url }}">Tumblers</a></li>
+          <li><a href="{{ section.settings.ornaments_link | default: routes.all_products_collection_url }}">Ornaments</a></li>
+          <li><a href="{{ section.settings.golf_link | default: routes.all_products_collection_url }}">Golf Balls &amp; More</a></li>
+          <li><a href="{{ section.settings.custom_link | default: routes.all_products_collection_url }}">Custom Orders</a></li>
+          <li><a href="{{ section.settings.bulk_link | default: routes.all_products_collection_url }}">Bulk Orders</a></li>
+        </ul>
+
+        <p class="mobile-menu__label">Beese &amp; Co.</p>
+        <ul class="mobile-menu__list mobile-menu__list--secondary">
           <li><a href="{{ section.settings.about_link | default: routes.root_url }}">About</a></li>
           <li><a href="{{ section.settings.contact_link | default: routes.root_url }}">Contact</a></li>
-        {% endif %}
-      </ul>
+          <li><a href="{{ routes.search_url }}">Search</a></li>
+          <li><a href="{{ routes.account_url }}">Account</a></li>
+        </ul>
+      </nav>
     </div>
   </div>
 </header>
