@@ -8,6 +8,7 @@
   <title>{% if page_title %}{{ page_title }}{% else %}{{ shop.name }}{% endif %}{% unless page_title contains shop.name %} — {{ shop.name }}{% endunless %}</title>
   {{ content_for_header }}
   {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {{ 'product-master.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
 </head>
 <body>
