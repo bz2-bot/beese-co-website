@@ -1,0 +1,72 @@
+/* Denser shopping grids: more products visible with less scrolling. */
+.collection-grid,
+.tumbler-shop__products,
+.tumbler-shop__empty-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+.product-card__media {
+  padding: clamp(14px, 2.2vw, 28px) !important;
+}
+
+.product-card__info {
+  padding: 12px 8px 16px !important;
+}
+
+@media (max-width: 990px) {
+  .collection-grid,
+  .tumbler-shop__products,
+  .tumbler-shop__empty-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .page-width {
+    width: min(calc(100% - 16px), var(--max)) !important;
+  }
+
+  .collection-grid,
+  .tumbler-shop__products,
+  .tumbler-shop__empty-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+  }
+
+  .product-card__media {
+    padding: 7px !important;
+  }
+
+  .product-card__info {
+    padding: 8px 4px 10px !important;
+  }
+
+  .product-card__title {
+    font-size: .6rem !important;
+    line-height: 1.22 !important;
+    letter-spacing: .025em !important;
+  }
+
+  .product-card__price {
+    margin-top: 3px !important;
+    font-size: .64rem !important;
+  }
+
+  .tumbler-shop__empty-media {
+    padding: 8px !important;
+  }
+
+  .tumbler-shop__empty-card > div:last-child {
+    padding: 8px 4px !important;
+  }
+
+  .tumbler-shop__empty-card strong {
+    font-size: .6rem !important;
+  }
+
+  .tumbler-shop__empty-card span {
+    font-size: .58rem !important;
+  }
+}
