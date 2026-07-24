@@ -1,1 +1,127 @@
-<section class="page-width section"><h1 class="heading heading-lg">Cart</h1>{% if cart.item_count == 0 %}<p>Your cart is empty.</p>{% else %}<form action="{{ routes.cart_url }}" method="post">{% for item in cart.items %}<div style="display:grid;grid-template-columns:100px 1fr auto;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)">{% if item.image %}{{ item.image | image_url: width: 200 | image_tag }}{% endif %}<div><strong>{{ item.product.title }}</strong><div>{{ item.variant.title }}</div>{% for p in item.properties %}{% unless p.last == blank %}<small>{{ p.first }}: {{ p.last }}</small><br>{% endunless %}{% endfor %}</div><div>{{ item.final_line_price | money }}</div></div>{% endfor %}<button class="button" type="submit" name="checkout">Checkout</button></form>{% endif %}</section>{% schema %}{"name":"Main cart","settings":[]}{% endschema %}
+<section class="page-width cart-page">
+  <header class="cart-page__header">
+    <div>
+      <div class="eyebrow">Review your order</div>
+      <h1 class="heading heading-lg">Your Cart</h1>
+    </div>
+    {% if cart.item_count > 0 %}
+      <span class="cart-page__count">{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}</span>
+    {% endif %}
+  </header>
+
+  {% if cart.item_count == 0 %}
+    <div class="cart-empty">
+      <h2>Your cart is empty.</h2>
+      <p>Start with a custom tumbler and build something made just for you.</p>
+      <a class="button" href="{{ routes.all_products_collection_url }}">Shop Tumblers</a>
+    </div>
+  {% else %}
+    <form class="cart-form" action="{{ routes.cart_url }}" method="post" novalidate>
+      <div class="cart-layout">
+        <div class="cart-items" aria-label="Cart items">
+          {% for item in cart.items %}
+            <article class="cart-item">
+              <a class="cart-item__media" href="{{ item.url }}" aria-label="View {{ item.product.title | escape }}">
+                {% if item.image %}
+                  {{
+                    item.image
+                    | image_url: width: 360
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '120, 180, 240, 360',
+                      sizes: '(max-width: 520px) 96px, 140px',
+                      alt: item.image.alt | default: item.product.title
+                  }}
+                {% endif %}
+              </a>
+
+              <div class="cart-item__content">
+                <div class="cart-item__topline">
+                  <div>
+                    <a class="cart-item__title" href="{{ item.url }}">{{ item.product.title }}</a>
+                    {% unless item.product.has_only_default_variant %}
+                      <div class="cart-item__variant">{{ item.variant.title }}</div>
+                    {% endunless %}
+                  </div>
+                  <div class="cart-item__price">{{ item.final_line_price | money }}</div>
+                </div>
+
+                {% assign has_visible_properties = false %}
+                {% for property in item.properties %}
+                  {% assign property_name = property.first %}
+                  {% assign property_value = property.last %}
+                  {% assign first_character = property_name | slice: 0 %}
+                  {% unless property_value == blank or first_character == '_' or property_name contains 'Instant Preview' %}
+                    {% assign has_visible_properties = true %}
+                  {% endunless %}
+                {% endfor %}
+
+                {% if has_visible_properties %}
+                  <dl class="cart-item__details">
+                    {% for property in item.properties %}
+                      {% assign property_name = property.first %}
+                      {% assign property_value = property.last %}
+                      {% assign first_character = property_name | slice: 0 %}
+                      {% unless property_value == blank or first_character == '_' or property_name contains 'Instant Preview' %}
+                        <div class="cart-item__detail">
+                          <dt>{{ property_name }}</dt>
+                          <dd>
+                            {% if property_value contains '/uploads/' %}
+                              <a href="{{ property_value }}" target="_blank" rel="noopener">View uploaded artwork</a>
+                            {% else %}
+                              {{ property_value }}
+                            {% endif %}
+                          </dd>
+                        </div>
+                      {% endunless %}
+                    {% endfor %}
+                  </dl>
+                {% endif %}
+
+                <div class="cart-item__actions">
+                  <label for="Quantity-{{ forloop.index }}">Quantity</label>
+                  <input
+                    id="Quantity-{{ forloop.index }}"
+                    class="cart-item__quantity"
+                    type="number"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    step="1"
+                    inputmode="numeric"
+                    aria-label="Quantity for {{ item.product.title | escape }}"
+                  >
+                  <a class="cart-item__remove" href="{{ item.url_to_remove }}">Remove</a>
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+
+          <button class="cart-update" type="submit" name="update">Update Cart</button>
+        </div>
+
+        <aside class="cart-summary" aria-label="Order summary">
+          <h2>Order Summary</h2>
+          <div class="cart-summary__row">
+            <span>Subtotal</span>
+            <strong>{{ cart.total_price | money }}</strong>
+          </div>
+          <p class="cart-summary__note">Shipping, pickup availability and taxes are calculated at checkout.</p>
+          <div class="cart-summary__proof">
+            <strong>Your taped proof comes next.</strong>
+            <span>Production will not begin until you approve the proof sent to your mobile number.</span>
+          </div>
+          <button class="button cart-summary__checkout" type="submit" name="checkout">Checkout</button>
+          <a class="cart-summary__continue" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+        </aside>
+      </div>
+    </form>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Main cart",
+  "settings": []
+}
+{% endschema %}
