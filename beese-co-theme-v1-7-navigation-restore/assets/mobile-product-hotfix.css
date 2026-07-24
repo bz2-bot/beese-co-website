@@ -1,0 +1,103 @@
+/* Emergency mobile containment for every product page. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 900px) {
+  #MainContent,
+  .product-page,
+  .product-page > *,
+  .product-gallery,
+  .product-gallery__stage,
+  .product-form-wrap,
+  .product-form-wrap form,
+  .product-description,
+  .field,
+  .choice-row,
+  .preview-controls,
+  .qty-row {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .product-page {
+    display: block !important;
+    margin-inline: auto !important;
+    padding-inline: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .product-gallery,
+  .product-form-wrap {
+    margin-inline: 0 !important;
+  }
+
+  .product-gallery__stage,
+  .product-gallery__main,
+  .product-gallery__stage > img {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .product-gallery__stage {
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  .product-gallery__main {
+    display: block !important;
+    object-fit: contain !important;
+  }
+
+  .product-description,
+  .product-description * {
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+  }
+
+  .product-description img,
+  .product-description video,
+  .product-description iframe,
+  .product-description table {
+    max-width: 100% !important;
+  }
+
+  .choice-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+
+  .choice,
+  .choice label,
+  input,
+  textarea,
+  select,
+  button {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .product-thumbs {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .product-form-wrap {
+    padding: 16px !important;
+  }
+
+  .product-page .heading,
+  .product-page h1,
+  .product-page h2,
+  .product-page h3 {
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+  }
+}
