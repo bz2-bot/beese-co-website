@@ -25,6 +25,7 @@
   {% if seo_description != blank %}<meta name="twitter:description" content="{{ seo_description | escape }}">{% endif %}
 
   {% if request.page_type == 'index' %}
+    {% capture structured_search_url %}{{ shop.url }}{{ routes.search_url }}?q={% raw %}{search_term_string}{% endraw %}{% endcapture %}
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -42,7 +43,7 @@
         "url": {{ shop.url | append: routes.root_url | json }},
         "potentialAction": {
           "@type": "SearchAction",
-          "target": {{ shop.url | append: routes.search_url | append: '?q={search_term_string}' | json }},
+          "target": {{ structured_search_url | json }},
           "query-input": "required name=search_term_string"
         }
       }
