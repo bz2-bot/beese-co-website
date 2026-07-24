@@ -1,4 +1,4 @@
-/* Emergency mobile containment for every product page. */
+/* Mobile containment and product-page polish for every customizable product. */
 html,
 body {
   max-width: 100%;
@@ -85,12 +85,54 @@ body {
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: auto !important;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-inline: contain;
+  }
+
+  .product-thumb {
+    scroll-snap-align: start;
   }
 }
 
 @media (max-width: 520px) {
+  .product-page {
+    padding-bottom: 1rem !important;
+  }
+
+  .product-gallery__stage {
+    border-radius: 18px !important;
+  }
+
+  .product-gallery__main {
+    padding: 10px !important;
+  }
+
+  .product-preview__badge {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    padding: 10px 12px !important;
+    font-size: 0.68rem !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+  }
+
+  .product-thumbs {
+    gap: 10px !important;
+    padding: 10px 0 6px !important;
+  }
+
+  .product-thumb {
+    flex-basis: 72px !important;
+    border-radius: 14px !important;
+  }
+
   .product-form-wrap {
-    padding: 16px !important;
+    padding: 20px 16px 24px !important;
+    border-radius: 20px !important;
+    box-shadow: none !important;
   }
 
   .product-page .heading,
@@ -99,5 +141,99 @@ body {
   .product-page h3 {
     max-width: 100% !important;
     overflow-wrap: anywhere !important;
+  }
+
+  .product-page h1 {
+    font-size: clamp(2rem, 11vw, 3rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  .product-description {
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .field {
+    margin-bottom: 1.4rem !important;
+  }
+
+  .field legend,
+  .field > label {
+    font-size: 0.92rem !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.035em !important;
+  }
+
+  .choice-row {
+    gap: 10px !important;
+  }
+
+  .choice label {
+    padding: 11px 16px !important;
+    font-size: 0.9rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .field input[type='text'],
+  .field input[type='tel'],
+  .field input[type='file'],
+  .field textarea {
+    padding: 14px !important;
+    font-size: 16px !important;
+    line-height: 1.35 !important;
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder {
+    font-size: 0.92rem !important;
+  }
+
+  .field-help {
+    font-size: 0.88rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .proof-panel {
+    padding: 18px !important;
+    margin: 1.25rem 0 !important;
+    border-radius: 18px !important;
+  }
+
+  .proof-panel strong {
+    font-size: 1rem !important;
+  }
+
+  .proof-check {
+    gap: 12px !important;
+  }
+
+  .proof-check input {
+    width: 24px !important;
+    height: 24px !important;
+    margin-top: 2px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .proof-check label {
+    font-size: 0.92rem !important;
+    line-height: 1.45 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  .qty-row {
+    grid-template-columns: 88px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .qty-row input,
+  .qty-row .button {
+    min-height: 54px !important;
+  }
+
+  .qty-row .button {
+    padding-inline: 14px !important;
+    font-size: 0.95rem !important;
   }
 }
