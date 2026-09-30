@@ -64,12 +64,12 @@
                       {% assign first_character = property_name | slice: 0 %}
                       {% unless property_value == blank or first_character == '_' or property_name contains 'Instant Preview' %}
                         <div class="cart-item__detail">
-                          <dt>{{ property_name }}</dt>
+                          <dt>{{ property_name | escape }}</dt>
                           <dd>
                             {% if property_value contains '/uploads/' %}
-                              <a href="{{ property_value }}" target="_blank" rel="noopener">View uploaded artwork</a>
+                              <a href="{{ property_value | escape }}" target="_blank" rel="noopener">View uploaded artwork</a>
                             {% else %}
-                              {{ property_value }}
+                              {{ property_value | escape }}
                             {% endif %}
                           </dd>
                         </div>

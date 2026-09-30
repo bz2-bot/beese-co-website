@@ -116,6 +116,22 @@ document.addEventListener('DOMContentLoaded', () => {
       error.classList.toggle('is-visible', Boolean(message));
     };
 
+    const reuseArtwork = form.querySelector('[data-reuse-artwork]');
+    const reorderField = form.querySelector('[data-reorder-field]');
+    const reorderReference = form.querySelector('[data-reorder-reference]');
+    const personalization = form.querySelector('[data-personalization]');
+    const syncReorder = () => {
+      const reusing = Boolean(reuseArtwork?.checked);
+      if (reorderField) reorderField.hidden = !reusing;
+      if (reorderReference) {
+        reorderReference.disabled = !reusing;
+        reorderReference.required = reusing;
+      }
+      setError();
+    };
+    reuseArtwork?.addEventListener('change', syncReorder);
+    syncReorder();
+
     const getCoverageField = () => [...form.querySelectorAll('[data-option-position]')]
       .find((field) => ['customization area', 'coverage', 'decoration area'].includes(normalize(field.dataset.optionName)));
 
@@ -164,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
       idInput.value = variant.id;
       if (price) price.textContent = money(variant.price);
       button.disabled = !variant.available;
-      label.textContent = variant.available ? 'Add to Cart' : 'Sold Out';
+      label.textContent = variant.available ? 'Start My Custom Order' : 'Sold Out';
       const url = new URL(window.location.href);
       url.searchParams.set('variant', variant.id);
       window.history.replaceState({}, '', url);
@@ -277,6 +293,18 @@ document.addEventListener('DOMContentLoaded', () => {
         quantity?.focus();
         return;
       }
+      if (reuseArtwork?.checked && !reorderReference?.value.trim()) {
+        event.preventDefault();
+        setError('Enter your previous order number or business name so we can find your artwork.');
+        reorderReference?.focus();
+        return;
+      }
+      if (!reuseArtwork?.checked && !artworkInput?.files?.length && !personalization?.value.trim()) {
+        event.preventDefault();
+        setError('Upload an idea, enter personalization text, or choose to use your previous artwork.');
+        personalization?.focus();
+        return;
+      }
       if (!phone?.value.trim()) {
         event.preventDefault();
         setError('Enter the mobile number where you want to receive your taped proof.');
@@ -317,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const observer = new IntersectionObserver((entries) => {
         const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible?.target?.id) setActive(visible.target.id);
-      }, { rootMargin: `calc(var(--beese-header-height, 120px) * -1) 0px -55% 0px`, threshold: [0.05, 0.2, 0.5] });
+      }, { rootMargin: `-${header?.offsetHeight || 120}px 0px -55% 0px`, threshold: [0.05, 0.2, 0.5] });
       sections.forEach((section) => observer.observe(section));
     }
   }

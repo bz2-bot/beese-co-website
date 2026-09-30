@@ -1,1 +1,121 @@
-{"sections":{"hero":{"type":"hero","settings":{"eyebrow":"Made in Northern Illinois","heading":"Personalized gifts made to be used, loved and remembered.","script":"Made one piece at a time.","text":"Shop custom tumblers, ornaments, golf gifts and meaningful keepsakes created just for you.","primary_label":"Shop Laser Engraved","primary_link":"\/collections\/all","secondary_label":"Shop Full Color","secondary_link":"\/collections\/all","image":"shopify:\/\/shop_images\/f1fd05b8-0691-45b9-bf71-bdfc3a6fcadf.png","image_alt":"Personalized Beese and Co. products arranged for the homepage"}},"trust":{"type":"trust-bar","blocks":{"proof":{"type":"item","settings":{"heading":"Proof Before Production","text":"Approve your design before we make it."}},"made":{"type":"item","settings":{"heading":"Made in Northern Illinois","text":"Created one order at a time by a small business."}},"quality":{"type":"item","settings":{"heading":"Personalized & Made to Last","text":"Thoughtful products designed for real life."}}},"block_order":["proof","made","quality"],"settings":{}},"categories":{"type":"category-grid","blocks":{"drinkware":{"type":"category","settings":{"title":"Tumblers","text":"Custom drinkware in the size and style you want","label":"Shop tumblers","image":"shopify:\/\/shop_images\/IMG_0877.jpg","link":"\/collections\/all"}},"fullcolor":{"type":"category","settings":{"title":"Full Color","text":"Bright custom printing for photos, artwork and logos","label":"Shop full color","image":"shopify:\/\/shop_images\/IMG_0694.heic","link":"\/collections\/all"}},"ornaments":{"type":"category","settings":{"title":"Ornaments","text":"Personalized keepsakes for every meaningful moment","label":"Shop ornaments","image":"shopify:\/\/shop_images\/IMG-0665.heic","link":"\/collections\/all"}},"golf":{"type":"category","settings":{"title":"Golf Balls & More","text":"Personalized golf gifts, balls and accessories","label":"Shop golf gifts","image":"shopify:\/\/shop_images\/IMG_0351_16f57e7d-4e03-4380-a8c9-eccd3793e9ef_1.jpg","link":"\/collections\/all"}}},"block_order":["drinkware","fullcolor","ornaments","golf"],"settings":{"heading":"How would you like to shop?"}},"story":{"type":"story","settings":{"eyebrow":"Our Story","heading":"Made with care, one order at a time.","text":"<p>Beese & Co. creates personalized products that feel thoughtful, useful and made to last. Every order is handled by a real small business in Northern Illinois.<\/p>","label":"Our Story","link":"\/pages\/about"}}},"order":["hero","trust","categories","story"]}
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Made in Northern Illinois",
+        "heading": "Personalized gifts made to be used, loved and remembered.",
+        "script": "Made one piece at a time.",
+        "text": "Shop custom tumblers, ornaments, golf gifts and meaningful keepsakes created just for you.",
+        "primary_label": "Shop Laser Engraved",
+        "primary_link": "/collections/laser-engraved-uv-printed-tumblers-copy",
+        "secondary_label": "Shop Full Color",
+        "secondary_link": "/collections/full-color-printing",
+        "image": "shopify://shop_images/f1fd05b8-0691-45b9-bf71-bdfc3a6fcadf.png",
+        "image_alt": "Personalized Beese and Co. products arranged for the homepage"
+      }
+    },
+    "trust": {
+      "type": "trust-bar",
+      "blocks": {
+        "proof": {
+          "type": "item",
+          "settings": {
+            "heading": "Proof Before Production",
+            "text": "Approve your design before we make it."
+          }
+        },
+        "made": {
+          "type": "item",
+          "settings": {
+            "heading": "Made in Northern Illinois",
+            "text": "Created one order at a time by a small business."
+          }
+        },
+        "quality": {
+          "type": "item",
+          "settings": {
+            "heading": "Personalized & Made to Last",
+            "text": "Thoughtful products designed for real life."
+          }
+        }
+      },
+      "block_order": [
+        "proof",
+        "made",
+        "quality"
+      ],
+      "settings": {}
+    },
+    "categories": {
+      "type": "category-grid",
+      "blocks": {
+        "drinkware": {
+          "type": "category",
+          "settings": {
+            "title": "Tumblers",
+            "text": "Custom drinkware in the size and style you want",
+            "label": "Shop tumblers",
+            "image": "shopify://shop_images/IMG_0877.jpg",
+            "link": "/collections/tumblers"
+          }
+        },
+        "fullcolor": {
+          "type": "category",
+          "settings": {
+            "title": "Full Color",
+            "text": "Bright custom printing for photos, artwork and logos",
+            "label": "Shop full color",
+            "image": "shopify://shop_images/IMG_0694.heic",
+            "link": "/collections/full-color-printing"
+          }
+        },
+        "ornaments": {
+          "type": "category",
+          "settings": {
+            "title": "Ornaments",
+            "text": "Personalized keepsakes for every meaningful moment",
+            "label": "Shop ornaments",
+            "image": "shopify://shop_images/IMG-0665.heic",
+            "link": "/collections/ornaments-1"
+          }
+        },
+        "golf": {
+          "type": "category",
+          "settings": {
+            "title": "Golf Balls & More",
+            "text": "Personalized golf gifts, balls and accessories",
+            "label": "Shop golf gifts",
+            "image": "shopify://shop_images/IMG_0351_16f57e7d-4e03-4380-a8c9-eccd3793e9ef_1.jpg",
+            "link": "/collections/golf-itmes"
+          }
+        }
+      },
+      "block_order": [
+        "drinkware",
+        "fullcolor",
+        "ornaments",
+        "golf"
+      ],
+      "settings": {
+        "heading": "How would you like to shop?"
+      }
+    },
+    "story": {
+      "type": "story",
+      "settings": {
+        "eyebrow": "Our Story",
+        "heading": "Made with care, one order at a time.",
+        "text": "<p>Beese & Co. creates personalized products that feel thoughtful, useful and made to last. Every order is handled by a real small business in Northern Illinois.</p>",
+        "label": "Our Story",
+        "link": "/pages/about-us"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "categories",
+    "story"
+  ]
+}
