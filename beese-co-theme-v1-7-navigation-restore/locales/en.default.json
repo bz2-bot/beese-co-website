@@ -19,6 +19,9 @@
     },
     "price": {
       "from": "From {{ price }}"
+    },
+    "ready_made": {
+      "label": "Ready-made designs"
     }
   },
   "pages": {
@@ -41,12 +44,17 @@
   },
   "process": {
     "step_1_heading": "Choose and personalize",
-    "step_1_body": "Select a product and provide your artwork, text or saved-artwork reference.",
+    "step_1_body": "Select your product options. For custom orders, provide artwork, text or a saved-artwork reference.",
     "step_2_heading": "Pay at checkout",
     "step_2_body": "Payment is required before production. Shipping and taxes appear at checkout.",
     "step_3_heading": "Approve your proof",
     "step_3_body": "For custom orders, approve your taped proof by text before we make your item.",
     "step_4_heading": "Pickup or shipping",
-    "step_4_body": "Your production timing is confirmed with your proof. Choose pickup or shipping at checkout."
+    "step_4_body": "Choose pickup or shipping at checkout. Custom production timing is confirmed with your proof."
+  },
+  "cart": {
+    "empty": {
+      "body": "Choose a product to start your order."
+    }
   }
 }
