@@ -56,5 +56,12 @@
     "empty": {
       "body": "Choose a product to start your order."
     }
+  },
+  "collections": {
+    "laser_title": "Laser Engraved Tumblers",
+    "color_title": "Full Color Printing"
+  },
+  "search": {
+    "no_results": "No products found. Try another search or contact Dana for help."
   }
 }
