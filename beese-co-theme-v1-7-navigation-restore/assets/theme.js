@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!json || !form) return;
 
     const product = JSON.parse(json.textContent);
+    const readyMade = root.dataset.readyMade === 'true';
     const idInput = form.querySelector('[data-variant-id]');
     const price = root.querySelector('[data-product-price]');
     const button = form.querySelector('[data-add-button]');
@@ -180,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
       idInput.value = variant.id;
       if (price) price.textContent = money(variant.price);
       button.disabled = !variant.available;
-      label.textContent = variant.available ? 'Start My Custom Order' : 'Sold Out';
+      label.textContent = variant.available ? (readyMade ? 'Add to Cart' : 'Start My Custom Order') : 'Sold Out';
       const url = new URL(window.location.href);
       url.searchParams.set('variant', variant.id);
       window.history.replaceState({}, '', url);
@@ -245,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       if (artworkStatus) artworkStatus.textContent = `${file.name} selected.`;
+      if (!artworkPreview) return;
       const previewable = ['image/png', 'image/jpeg', 'image/svg+xml'].includes(file.type);
       if (!previewable) {
         artworkPreview?.classList.remove('is-visible');
@@ -276,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!idInput?.value) {
         event.preventDefault();
-        setError('Choose an available color and customization area before adding this tumbler to your cart.');
+        setError('Choose available product options before adding this item to your cart.');
         return;
       }
       if (invalidFullWrapCombination) {
@@ -293,6 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quantity?.focus();
         return;
       }
+      if (readyMade) return;
       if (reuseArtwork?.checked && !reorderReference?.value.trim()) {
         event.preventDefault();
         setError('Enter your previous order number or business name so we can find your artwork.');
