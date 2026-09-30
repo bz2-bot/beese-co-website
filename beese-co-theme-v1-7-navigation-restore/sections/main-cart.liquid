@@ -1,3 +1,7 @@
+{% assign needs_proof = false %}
+{% for item in cart.items %}
+  {% if item.properties['Taped Proof Agreement'] == 'Agreed' %}{% assign needs_proof = true %}{% endif %}
+{% endfor %}
 <section class="page-width cart-page">
   <header class="cart-page__header">
     <div>
@@ -12,8 +16,8 @@
   {% if cart.item_count == 0 %}
     <div class="cart-empty">
       <h2>Your cart is empty.</h2>
-      <p>Start with a custom tumbler and build something made just for you.</p>
-      <a class="button" href="{{ routes.all_products_collection_url }}">Shop Tumblers</a>
+      <p>{{ 'cart.empty.body' | t }}</p>
+      <a class="button" href="{{ routes.all_products_collection_url }}">{{ 'products.navigation.shop_all' | t }}</a>
     </div>
   {% else %}
     <form class="cart-form" action="{{ routes.cart_url }}" method="post" novalidate>
@@ -107,10 +111,11 @@
             <strong>{{ cart.total_price | money }}</strong>
           </div>
           <p class="cart-summary__note">Shipping, pickup availability and taxes are calculated at checkout.</p>
-          <div class="cart-summary__proof">
+          {% if needs_proof %}<div class="cart-summary__proof">
             <strong>Your taped proof comes next.</strong>
             <span>Production will not begin until you approve the proof sent to your mobile number.</span>
           </div>
+          {% endif %}
           <button class="button cart-summary__checkout" type="submit" name="checkout">Checkout</button>
           <a class="cart-summary__continue" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
         </aside>
