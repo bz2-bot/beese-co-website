@@ -1,6 +1,25 @@
+{% liquid
+  assign master_tumbler = false
+  if product.handle == 'personalized-22-oz-skinny-tumbler'
+    assign master_tumbler = true
+  endif
+  assign quote_required = false
+  if product.price_min == 0 or product.handle == 'custom-golf-ball' or product.handle == 'custom-engraving' or product.handle == 'custom-printing'
+    assign quote_required = true
+  endif
+  assign decoration_choice = master_tumbler
+  if product.handle == 'sports-ornaments' or product.handle == 'golf-ball-tumbler'
+    assign decoration_choice = true
+  endif
+  assign ready_made = false
+  if product.handle == 'in-stock-ornaments' or product.handle == 'silver-hat-clip-with-golf-ball-marker' or product.handle == 'silver-hat-clip-with-golf-ball-marker-copy'
+    assign ready_made = true
+  endif
+%}
 <section
   class="page-width product-page"
   data-product-root
+  data-ready-made="{{ ready_made }}"
   data-preview-profile="{{ section.settings.preview_profile }}"
   style="
     --preview-left: {{ section.settings.preview_left }}%;
@@ -28,10 +47,10 @@
       {% else %}
         <img src="{{ 'placeholder-product.svg' | asset_url }}" class="theme-placeholder-image product-gallery__main" alt="Product image placeholder" width="1800" height="1800" loading="eager">
       {% endif %}
-      <div class="product-preview__boundary" data-preview-boundary aria-hidden="true">
+      {% if master_tumbler %}<div class="product-preview__boundary" data-preview-boundary aria-hidden="true">
         <img class="product-preview__artwork" data-artwork-preview alt="" width="576" height="1170">
       </div>
-      <div class="product-preview__badge">Instant preview — taped proof required</div>
+      <div class="product-preview__badge">Instant preview — taped proof required</div>{% endif %}
     </div>
     {% if product.images.size > 1 %}
       <div class="product-thumbs" aria-label="Product images">
@@ -48,9 +67,13 @@
   <div class="product-form-wrap">
     <div class="eyebrow">Made to order</div>
     <h1 class="heading heading-md">{{ product.title }}</h1>
-    <div class="price" data-product-price>{{ product.selected_or_first_available_variant.price | money }}</div>
+    {% unless quote_required %}<div class="price" data-product-price>{{ product.selected_or_first_available_variant.price | money }}</div>{% endunless %}
     <div class="product-description">{{ product.description }}</div>
 
+    {% if quote_required %}
+      <div class="proof-panel"><strong>{{ 'products.quote.heading' | t }}</strong><span>{{ 'products.quote.body' | t }}</span></div>
+      <a class="button" href="{{ routes.root_url }}pages/contact">{{ 'products.quote.button' | t }}</a>
+    {% else %}
     {% form 'product', product, enctype: 'multipart/form-data', data-product-form: '' %}
       {% unless product.has_only_default_variant %}
         {% for option in product.options_with_values %}
@@ -68,14 +91,15 @@
         {% endfor %}
       {% endunless %}
 
-      {% if section.settings.show_decoration %}
+      {% unless ready_made %}
+      {% if decoration_choice and section.settings.show_decoration %}
         <fieldset class="field" data-decoration-choice>
           <legend>How would you like it personalized?</legend>
           <div class="choice-row">
             <div class="choice"><input type="radio" id="dec-laser" name="properties[Decoration Method]" value="Laser Engraved" required checked data-decoration-laser><label for="dec-laser">Laser Engraved</label></div>
             {% unless section.settings.laser_only %}<div class="choice"><input type="radio" id="dec-full" name="properties[Decoration Method]" value="Full Color UV" data-decoration-full-color><label for="dec-full">Full Color</label></div>{% endunless %}
           </div>
-          <small class="field-help" data-decoration-help>Laser engraving previews your uploaded artwork in engraved gray.</small>
+          {% if master_tumbler %}<small class="field-help" data-decoration-help>Laser engraving previews your uploaded artwork in engraved gray.</small>{% endif %}
           <small class="field-help field-help--rule" data-decoration-rule aria-live="polite" hidden>Full wrap is available with laser engraving only.</small>
         </fieldset>
       {% endif %}
@@ -86,33 +110,35 @@
       <div class="field">
         <label for="Artwork">Upload your logo or artwork</label>
         <input id="Artwork" type="file" name="properties[Artwork Upload]" accept=".png,.jpg,.jpeg,.pdf,.svg" data-artwork-upload aria-describedby="ArtworkHelp ArtworkStatus DesignRequirement">
-        <small class="field-help" id="ArtworkHelp">Transparent PNG files create the best instant preview. Your original file is attached to the order.</small>
+        <small class="field-help" id="ArtworkHelp">{% if master_tumbler %}Transparent PNG files create the best instant preview. {% endif %}Your original file is attached to the order.</small>
         <small class="field-help" id="ArtworkStatus" data-artwork-status aria-live="polite"></small>
-        <div class="preview-controls" data-preview-controls>
+        {% if master_tumbler %}<div class="preview-controls" data-preview-controls>
           <div class="preview-control"><label for="ArtworkSize"><span>Preview size</span><span data-size-value>64%</span></label><input id="ArtworkSize" type="range" min="20" max="92" value="64" data-preview-size></div>
           <div class="preview-control"><label for="ArtworkPosition"><span>Vertical position</span><span data-position-value>50%</span></label><input id="ArtworkPosition" type="range" min="15" max="85" value="50" data-preview-position></div>
-        </div>
+        </div>{% endif %}
       </div>
 
       <div class="field"><label for="Personalization">Name, monogram or additional text</label><input id="Personalization" type="text" name="properties[Personalization]" maxlength="120" data-personalization placeholder="Leave blank if you only want your uploaded artwork" aria-describedby="DesignRequirement"><small class="field-help" id="DesignRequirement">Provide an artwork file, personalization text, or both so we know what to create.</small></div>
       <div class="field"><label for="Instructions">Special instructions</label><textarea id="Instructions" name="properties[Special Instructions]" maxlength="1000" placeholder="Tell us anything we should know about placement, colors or your design."></textarea></div>
       <div class="field"><label for="Phone">Mobile number for your taped proof</label><input id="Phone" type="tel" name="properties[Mobile Number for Taped Proof]" autocomplete="tel" inputmode="tel" minlength="10" required placeholder="Please make sure this number is correct"><small class="field-help">We use this number only to text your taped proof and communicate about this order.</small></div>
 
-      <div class="proof-panel"><strong>Complimentary taped proof by text</strong><span>Your instant preview is for visualization only. Before production begins, we will text you a photo of a taped proof showing the final size and placement on the actual product.</span></div>
+      <div class="proof-panel"><strong>Complimentary taped proof by text</strong><span>{% if master_tumbler %}Your instant preview is for visualization only. {% endif %}Before production begins, we will text you a photo of a taped proof showing the final size and placement on the actual product.</span></div>
       <div class="field proof-check"><input id="Proof" type="checkbox" name="properties[Taped Proof Agreement]" value="Agreed" required><label for="Proof">I understand I will receive a text with a photo of my taped proof for approval before production begins. My order will not go into production until I approve it.</label></div>
 
-      <input type="hidden" name="properties[Instant Preview Decoration]" value="Laser Engraved" data-preview-decoration>
+      {% if master_tumbler %}<input type="hidden" name="properties[Instant Preview Decoration]" value="Laser Engraved" data-preview-decoration>
       <input type="hidden" name="properties[Instant Preview Profile]" value="{{ section.settings.preview_profile }}" data-preview-profile-property>
       <input type="hidden" name="properties[Instant Preview Size]" value="64%" data-preview-size-property>
-      <input type="hidden" name="properties[Instant Preview Position]" value="50%" data-preview-position-property>
+      <input type="hidden" name="properties[Instant Preview Position]" value="50%" data-preview-position-property>{% endif %}
+      {% endunless %}
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
 
       <div class="product-form-error" data-product-error role="alert"></div>
       <div class="qty-row"><input type="number" name="quantity" min="1" step="1" value="1" aria-label="Quantity"><button class="button" type="submit" data-add-button {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}><span data-add-label>{% if product.selected_or_first_available_variant.available %}Add to Cart{% else %}Sold Out{% endif %}</span></button></div>
     {% endform %}
+    {% endif %}
 
-    <div class="micro-trust"><div>Complimentary taped proof by text</div><div>Production begins only after your approval</div><div>Personalized in Illinois</div><div>Pickup or shipping available</div></div>
-    <nav class="product-related-links" aria-label="Related shopping links">{% if collection %}<a href="{{ collection.url }}">Shop more {{ collection.title }}</a>{% else %}<a href="{{ routes.root_url }}collections/tumblers">Shop all tumblers</a>{% endif %}<a href="{{ routes.root_url }}pages/contact">Questions? Contact Dana</a></nav>
+    {% unless ready_made or quote_required %}<div class="micro-trust"><div>Complimentary taped proof by text</div><div>Production begins only after your approval</div><div>Personalized in Illinois</div><div>Pickup or shipping available</div></div>{% endunless %}
+    <nav class="product-related-links" aria-label="Related shopping links">{% if collection %}<a href="{{ collection.url }}">Shop more {{ collection.title | escape }}</a>{% else %}<a href="{{ routes.all_products_collection_url }}">{{ 'products.navigation.shop_all' | t }}</a>{% endif %}<a href="{{ routes.root_url }}pages/contact">Questions? Contact Dana</a></nav>
   </div>
 
   <script type="application/json" data-product-json>{{ product | json }}</script>
