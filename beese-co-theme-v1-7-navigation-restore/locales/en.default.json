@@ -1,6 +1,52 @@
 {
   "general": {
     "search": "Search",
-    "cart": "Cart"
+    "cart": "Cart",
+    "help": "Help",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "policies": "Store policies"
+  },
+  "products": {
+    "quote": {
+      "heading": "Confirm your project before ordering",
+      "body": "Contact Dana to confirm the item, quantity and final price. Payment is required before production.",
+      "button": "Ask Dana about this product",
+      "card": "Contact for pricing"
+    },
+    "navigation": {
+      "shop_all": "Shop all products"
+    },
+    "price": {
+      "from": "From {{ price }}"
+    }
+  },
+  "pages": {
+    "about": {
+      "intro": "Beese & Co. creates personalized gifts, laser engraving and UV printing in Northern Illinois. Dana works with your artwork, name, logo or idea to make something personal.",
+      "process": "For custom orders, you approve a taped proof before production begins. Shop an available product or contact Dana to discuss a group order or a project that needs a quote.",
+      "button": "Contact Dana"
+    },
+    "faq": {
+      "payment_heading": "When do I pay?",
+      "payment": "Payment is required before production. Shipping and applicable taxes are shown at checkout.",
+      "proof_heading": "Will I see my custom design first?",
+      "proof": "Custom orders receive a taped proof by text for approval before production begins. Provide your mobile number and artwork or personalization details when ordering.",
+      "shipping_heading": "Can I collect my order?",
+      "shipping": "Pickup is available in Spring Grove, Illinois. Domestic economy shipping is free on orders of $75 or more. Production timing is confirmed with your proof; shipping transit time is additional."
+    },
+    "uv": {
+      "button": "Shop UV printed tumblers"
+    }
+  },
+  "process": {
+    "step_1_heading": "Choose and personalize",
+    "step_1_body": "Select a product and provide your artwork, text or saved-artwork reference.",
+    "step_2_heading": "Pay at checkout",
+    "step_2_body": "Payment is required before production. Shipping and taxes appear at checkout.",
+    "step_3_heading": "Approve your proof",
+    "step_3_body": "For custom orders, approve your taped proof by text before we make your item.",
+    "step_4_heading": "Pickup or shipping",
+    "step_4_body": "Your production timing is confirmed with your proof. Choose pickup or shipping at checkout."
   }
 }
