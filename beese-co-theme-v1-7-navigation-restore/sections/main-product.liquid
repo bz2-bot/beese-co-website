@@ -65,7 +65,7 @@
   </div>
 
   <div class="product-form-wrap">
-    <div class="eyebrow">Made to order</div>
+    <div class="eyebrow">{% if ready_made %}{{ 'products.ready_made.label' | t }}{% else %}Made to order{% endif %}</div>
     <h1 class="heading heading-md">{{ product.title }}</h1>
     {% unless quote_required %}<div class="price" data-product-price>{{ product.selected_or_first_available_variant.price | money }}</div>{% endunless %}
     <div class="product-description">{{ product.description }}</div>
