@@ -171,7 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateVariant = () => {
       const selections = [...form.querySelectorAll('[data-option-position]')].map((field) => field.querySelector('input:checked')?.value);
-      const variant = product.variants.find((item) => item.options.every((value, index) => value === selections[index]));
+      const variant = selections.length === 0 && product.variants.length === 1
+        ? product.variants[0]
+        : product.variants.find((item) => item.options.every((value, index) => value === selections[index]));
       if (!variant) {
         idInput.value = '';
         button.disabled = true;
