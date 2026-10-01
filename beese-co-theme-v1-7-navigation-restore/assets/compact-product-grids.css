@@ -25,33 +25,34 @@
 
 @media (max-width: 620px) {
   .page-width {
-    width: min(calc(100% - 16px), var(--max)) !important;
+    width: min(calc(100% - 24px), var(--max)) !important;
   }
 
   .collection-grid,
   .tumbler-shop__products,
   .tumbler-shop__empty-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 7px !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
   }
 
   .product-card__media {
-    padding: 7px !important;
+    padding: 10px !important;
   }
 
   .product-card__info {
-    padding: 8px 4px 10px !important;
+    padding: 12px 8px 16px !important;
   }
 
   .product-card__title {
-    font-size: .6rem !important;
-    line-height: 1.22 !important;
-    letter-spacing: .025em !important;
+    font-size: .8125rem !important;
+    line-height: 1.4 !important;
+    letter-spacing: 0 !important;
+    text-transform: none;
   }
 
   .product-card__price {
     margin-top: 3px !important;
-    font-size: .64rem !important;
+    font-size: .8125rem !important;
   }
 
   .tumbler-shop__empty-media {
@@ -63,10 +64,10 @@
   }
 
   .tumbler-shop__empty-card strong {
-    font-size: .6rem !important;
+    font-size: .8125rem !important;
   }
 
   .tumbler-shop__empty-card span {
-    font-size: .58rem !important;
+    font-size: .8125rem !important;
   }
 }
