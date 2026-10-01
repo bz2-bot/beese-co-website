@@ -4,7 +4,7 @@
     assign master_tumbler = true
   endif
   assign quote_required = false
-  if product.price_min == 0 or product.handle == 'custom-golf-ball' or product.handle == 'custom-engraving' or product.handle == 'custom-printing'
+  if product.price_min == 0 or product.handle == 'custom-golf-ball' or product.handle == 'custom-engraving' or product.handle == 'custom-printing' or product.handle == 'overstock'
     assign quote_required = true
   endif
   assign decoration_choice = master_tumbler
@@ -12,7 +12,7 @@
     assign decoration_choice = true
   endif
   assign ready_made = false
-  if product.handle == 'in-stock-ornaments' or product.handle == 'silver-hat-clip-with-golf-ball-marker' or product.handle == 'silver-hat-clip-with-golf-ball-marker-copy'
+  if product.handle == '20-oz-tumbler' or product.handle == '22-oz-skinny-tumbler-with-slide-lid' or product.handle == 'overstock' or product.handle == 'in-stock-ornaments' or product.handle == 'silver-hat-clip-with-golf-ball-marker' or product.handle == 'silver-hat-clip-with-golf-ball-marker-copy'
     assign ready_made = true
   endif
 %}
@@ -71,6 +71,7 @@
     {% unless quote_required %}<div class="product-description">{{ product.description }}</div>{% endunless %}
 
     {% if quote_required %}
+      {% if product.handle == 'custom-golf-ball' or product.handle == 'overstock' %}<div class="product-description">{{ product.description }}</div>{% endif %}
       <div class="proof-panel"><strong>{{ 'products.quote.heading' | t }}</strong><span>{{ 'products.quote.body' | t }}</span></div>
       <a class="button" href="{{ routes.root_url }}pages/contact">{{ 'products.quote.button' | t }}</a>
     {% else %}
@@ -137,7 +138,7 @@
     {% endform %}
     {% endif %}
 
-    {% unless ready_made or quote_required %}<div class="micro-trust"><div>Complimentary taped proof by text</div><div>Production begins only after your approval</div><div>Personalized in Illinois</div><div>Pickup or shipping available</div></div>{% endunless %}
+    {% unless ready_made or quote_required %}<p class="field-help">{{ 'products.production.timing' | t }}</p><div class="micro-trust"><div>Complimentary taped proof by text</div><div>Production begins only after your approval</div><div>Personalized in Illinois</div><div>Pickup or shipping available</div></div>{% endunless %}
     <nav class="product-related-links" aria-label="Related shopping links">{% if collection %}<a href="{{ collection.url }}">Shop more {{ collection.title | escape }}</a>{% else %}<a href="{{ routes.all_products_collection_url }}">{{ 'products.navigation.shop_all' | t }}</a>{% endif %}<a href="{{ routes.root_url }}pages/contact">Questions? Contact Dana</a></nav>
   </div>
 
