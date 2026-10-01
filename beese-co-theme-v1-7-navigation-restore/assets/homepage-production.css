@@ -275,7 +275,7 @@ img[loading='lazy'] {
   .hero--production .heading-xl { grid-column: 1; grid-row: 2; font-size: clamp(1.375rem, 6vw, 1.75rem); line-height: 1.08; margin: 0; }
   .hero--production .script { grid-column: 1; grid-row: 3; font-size: 1rem; margin: 0; }
   .hero--production .hero__media { grid-column: 2; grid-row: 1 / 4; order: 0; min-height: 0; height: 100%; max-height: none; }
-  .hero--production .hero__media img { height: 100%; min-height: 180px; object-fit: cover; }
+  .hero--production .hero__media img { height: 100%; min-height: 180px; object-fit: cover; object-position: 78% center; }
   .hero--production .hero__text { grid-column: 1 / -1; grid-row: 4; font-size: .8125rem; line-height: 1.5; margin: 0; }
   .hero--production .hero__actions { grid-column: 1 / -1; grid-row: 5; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 4px 0 0; }
   .hero--production .hero__actions .button { min-height: 48px; width: 100%; padding: 10px 8px; font-size: .6875rem; letter-spacing: .04em; }
