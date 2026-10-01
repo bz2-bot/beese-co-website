@@ -110,11 +110,24 @@
         "label": "Our Story",
         "link": "/pages/about-us"
       }
+    },
+    "products": {
+      "type": "home-products",
+      "settings": {
+        "heading": "Shop products",
+        "products": [
+          "personalized-22-oz-skinny-tumbler",
+          "night-lights",
+          "40-oz-tumbler-with-handle-and-locking-lid",
+          "20-oz-tumbler"
+        ]
+      }
     }
   },
   "order": [
     "hero",
     "trust",
+    "products",
     "categories",
     "story"
   ]
