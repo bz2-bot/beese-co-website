@@ -1,1 +1,1 @@
-{"sections":{"main":{"type":"main-product","settings":{"show_decoration":true,"laser_only":false}},"process":{"type":"process-strip","settings":{}}},"order":["main","process"]}
+{"sections":{"main":{"type":"main-product","settings":{"show_decoration":true,"laser_only":false,"preview_profile":"22 oz master","preview_left":34,"preview_top":16,"preview_width":32,"preview_height":65}},"process":{"type":"process-strip","settings":{}}},"order":["main","process"]}

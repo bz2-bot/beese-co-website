@@ -1,7 +1,10 @@
+{% doc %}
+Renders the Beese & Co contact page and project enquiry form.
+{% enddoc %}
 <section class="guide-landing guide-landing--contact">
   <div class="guide-hero">
     <div class="guide-hero__copy"><div class="eyebrow">Contact</div><h1 class="heading heading-lg">Tell us what you are making.</h1><div class="guide-hero__accent">We will help you get started.</div><p>Have a question, an idea or artwork ready to go? Send the details below.</p></div>
-    <div class="guide-hero__media"><img src="{{ 'placeholder-story.svg' | asset_url }}" class="theme-placeholder-image" alt="Contact Beese and Co photo placeholder" loading="eager"></div>
+    <div class="guide-hero__media">{% assign contact_product = all_products['personalized-22-oz-skinny-tumbler'] %}{% if contact_product.featured_image %}{{ contact_product.featured_image | image_url: width: 1200 | image_tag: loading: 'eager', alt: contact_product.title }}{% endif %}</div>
   </div>
   <div class="page-width guide-landing__body">
     <div class="contact-layout">

@@ -676,3 +676,38 @@ html{scroll-behavior:smooth}
   .tumbler-shop__custom-copy .heading{white-space:normal}
   .tumbler-shop__custom-copy .button{width:100%}
 }
+
+.process-strip .process{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:990px){
+  .site-header--retail .site-header__top{grid-template-columns:44px minmax(0,1fr) 44px;gap:12px}
+  .site-header--retail .header-icons{display:contents}
+  .site-header--retail .site-logo{grid-column:2;grid-row:1;justify-self:center;align-items:center}
+  .site-header--retail .header-menu-toggle{grid-column:1;grid-row:1}
+  .site-header--retail .header-icon--cart{grid-column:3;grid-row:1}
+  .site-header--retail .header-icon{width:44px;height:44px}
+  .site-header--retail .header-icons>a:not(.header-icon--cart){display:none}
+  .header-icon__count{right:0;top:0}
+  .process-strip .process{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .process-strip .process__item{padding:18px;text-align:left;border-right:1px solid var(--line)}
+  .process-strip .process__item:nth-child(even){border-right:0}
+  .process-strip .process__item:nth-last-child(-n+2){border-bottom:0}
+}
+@media(max-width:620px){
+  .collection-products .collection-grid,.tumbler-shop__size-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .collection-products .product-card__media{padding:10px}
+  .collection-products .product-card__info{padding:12px 8px 16px}
+  .collection-products .product-card__title{font-size:.8125rem;line-height:1.4;letter-spacing:0;text-transform:none;overflow-wrap:anywhere}
+  .collection-products .product-card__price{font-size:.8125rem}
+  .collection-intro{padding-top:24px;padding-bottom:16px}
+  .collection-intro .heading{font-size:2rem}
+  .collection-products{padding-bottom:16px}
+  .process-strip.section{padding:24px 0 32px}
+  .process-strip .section-title{margin-bottom:18px}
+  .process-strip .process{grid-template-columns:1fr}
+  .process-strip .process__item{display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:12px;padding:16px;border-right:0;border-bottom:1px solid var(--line)}
+  .process-strip .process__item:nth-last-child(2){border-bottom:1px solid var(--line)}
+  .process-strip .process__item:last-child{border-bottom:0}
+  .process-strip .process__num{grid-row:1/3;font-size:1.5rem;line-height:1.2}
+  .process-strip .process__item strong{font-size:.875rem}
+  .process-strip .process__item p{grid-column:2;margin:4px 0 0;font-size:.8125rem;line-height:1.5}
+}
