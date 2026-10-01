@@ -22,6 +22,9 @@
     },
     "ready_made": {
       "label": "Ready-made designs"
+    },
+    "production": {
+      "timing": "Custom production takes 7\u201310 business days after proof approval. Shipping transit time is additional."
     }
   },
   "pages": {
@@ -36,7 +39,9 @@
       "proof_heading": "Will I see my custom design first?",
       "proof": "Custom orders receive a taped proof by text for approval before production begins. Provide your mobile number and artwork or personalization details when ordering.",
       "shipping_heading": "Can I collect my order?",
-      "shipping": "Pickup is available in Spring Grove, Illinois. Domestic economy shipping is free on orders of $75 or more. Production timing is confirmed with your proof; shipping transit time is additional."
+      "shipping": "Pickup is available in Spring Grove, Illinois. Domestic economy shipping is free on orders of $75 or more. Custom production takes 7\u201310 business days after proof approval; shipping transit time is additional.",
+      "cancellation_heading": "Can I cancel my custom order?",
+      "cancellation": "Contact Dana before the proof stage to cancel. Custom sales are final once the proof stage begins. Contact us if an item arrives damaged or incorrect."
     },
     "uv": {
       "button": "Shop UV printed tumblers"
@@ -50,7 +55,7 @@
     "step_3_heading": "Approve your proof",
     "step_3_body": "For custom orders, approve your taped proof by text before we make your item.",
     "step_4_heading": "Pickup or shipping",
-    "step_4_body": "Choose pickup or shipping at checkout. Custom production timing is confirmed with your proof."
+    "step_4_body": "Custom production takes 7\u201310 business days after proof approval. Choose pickup or shipping at checkout; shipping transit time is additional."
   },
   "cart": {
     "empty": {
