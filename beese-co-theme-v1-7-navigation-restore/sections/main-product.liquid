@@ -71,7 +71,7 @@
     {% unless quote_required %}<div class="product-description">{{ product.description }}</div>{% endunless %}
 
     {% if quote_required %}
-      {% if product.handle == 'custom-golf-ball' or product.handle == 'overstock' %}<div class="product-description">{{ product.description }}</div>{% endif %}
+      {% if product.handle == 'custom-golf-ball' or product.handle == 'overstock' or product.handle == 'custom-engraving' or product.handle == 'custom-printing' %}<div class="product-description">{{ product.description }}</div>{% endif %}
       <div class="proof-panel"><strong>{{ 'products.quote.heading' | t }}</strong><span>{{ 'products.quote.body' | t }}</span></div>
       <a class="button" href="{{ routes.root_url }}pages/contact">{{ 'products.quote.button' | t }}</a>
     {% else %}
